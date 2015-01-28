@@ -24,5 +24,6 @@
 bool motionInit(void);
 void getZeroMotionValue(void);
 int8_t getDevicePosition(void);
+bool detectMove(void);
 
 #endif /* INCLUDE_MOTION_H_ */

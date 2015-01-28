@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
 	motionInit();
 	while (1)
 	{
-		trace_printf("%d\n", getDevicePosition());
+		trace_printf("%d\n", detectMove());
 	}
 }
 
