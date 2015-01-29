@@ -6,10 +6,12 @@
 #include "Motion.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "diag/Trace.h"
 
 #define MPU_VALUE_LENGTH (10)     // MPU 读取数值数组的长度，长度越长，执行滤波算法是滤波越平滑
-#define MOVE_SENSITIVITY (80000ul)   // 判断身体移动的灵敏度，越小越灵敏
+uint16_t moveSensitivity = 330;   // 判断身体移动的灵敏度，越小越灵敏，在此处使用变量而不使用宏定义，
+								  // 是为了以后可以添加自动灵敏度校准程序
 
 // 私有函数
 void mpuSoftwareDelay(__IO uint32_t nCount);
@@ -162,10 +164,11 @@ bool detectMove(void)
 		ret += filter_sum*filter_sum;
 	}
 
+	ret = sqrt(ret);
 	//trace_printf("%d\n",ret);
 
 	// 判断三个角速度的平方和的大小，如果比设定的灵敏度大，就返回 1
-	if(ret > MOVE_SENSITIVITY)
+	if(ret > moveSensitivity)
 	{
 		return 1;
 	}
