@@ -11,6 +11,7 @@ uint8_t alarmHour       = 7;  // 闹钟时
 uint8_t alarmMinute     = 30; // 闹钟分
 uint8_t alarmHourDiff   = 12;
 uint8_t alarmMinuteDiff = 59; // 距闹钟响起还有多少小时多少分钟
+uint8_t alarmON         = 0;  // 闹钟开启指示，0 代表闹钟关闭，其他数值代表闹钟的不同模式（待定）
 struct tm currentTime   = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 现在的时间
 
 /** 时钟初始化
