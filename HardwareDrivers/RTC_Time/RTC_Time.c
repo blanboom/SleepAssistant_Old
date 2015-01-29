@@ -55,27 +55,6 @@ void RTCTime_SetUnixTime(time_t time)
 	RTC_WaitForLastTask();
 }
 
-// 设置 tm 格式的时间日期
-void RTCTime_SetCalenderTime(struct tm t)
-{
-	RTCTime_SetUnixTime(RTCTime_ConvCalendarToUnix(t));
-}
-// 将 tm 格式 时间日期转换为 time_t 格式
-time_t RTCTime_ConvCalendarToUnix(struct tm t)
-{
-	t.tm_year -= 1900;
-	return mktime(&t);
-}
-
-// 将 time_t 格式时间日期转换为 tm 格式
-struct tm RTCTime_ConvUnixToCalendar(time_t t)
-{
-	struct tm *t_tm;
-	t_tm = localtime(&t);
-	t_tm->tm_year += 1900;
-	return *t_tm;
-}
-
 // 与 C 标准库中的 time() 用法相同，获取 time_t 格式的时间
 time_t time(time_t* timer)
 {
@@ -83,3 +62,27 @@ time_t time(time_t* timer)
 	*timer = tmp;
 	return tmp;
 }
+
+////////////////////////////////////////////////////////////////
+// 下面代码暂时无需使用
+//
+//// 设置 tm 格式的时间日期
+//void RTCTime_SetCalenderTime(struct tm t)
+//{
+//	RTCTime_SetUnixTime(RTCTime_ConvCalendarToUnix(t));
+//}
+//// 将 tm 格式 时间日期转换为 time_t 格式
+//time_t RTCTime_ConvCalendarToUnix(struct tm t)
+//{
+//	t.tm_year -= 1900;
+//	return mktime(&t);
+//}
+//
+//// 将 time_t 格式时间日期转换为 tm 格式
+//struct tm RTCTime_ConvUnixToCalendar(time_t t)
+//{
+//	struct tm *t_tm;
+//	t_tm = localtime(&t);
+//	t_tm->tm_year += 1900;
+//	return *t_tm;
+//}

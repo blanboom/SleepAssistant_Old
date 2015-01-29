@@ -11,9 +11,9 @@
 
 void RTCTime_Init(void);
 void RTCTime_SetUnixTime(time_t time);
-void RTCTime_SetCalenderTime(struct tm t);
-time_t RTCTime_ConvCalendarToUnix(struct tm t);
-struct tm RTCTime_ConvUnixToCalendar(time_t t);
+//void RTCTime_SetCalenderTime(struct tm t);
+//time_t RTCTime_ConvCalendarToUnix(struct tm t);
+//struct tm RTCTime_ConvUnixToCalendar(time_t t);
 extern time_t time(time_t* timer);
 
 #endif
