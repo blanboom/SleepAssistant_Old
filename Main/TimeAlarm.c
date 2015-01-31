@@ -5,6 +5,8 @@
  */
 
 #include "TimeAlarm.h"
+#include <stdio.h>
+#include "diag/Trace.h"
 
 // 闹钟和时间的全局变量，靠 RTC 的秒中断更新
 uint8_t alarmHour       = 7;  // 闹钟时
@@ -43,4 +45,12 @@ int8_t setTime(uint8_t year, uint8_t month, uint8_t day,
 	if(tmpTime < 0) {return tmpTime;}
 	RTCTime_SetUnixTime(tmpTime);     // 将时间存放在 RTC
 	return 0;
+}
+
+/** 时间更新
+ * 放在 RTC 的中断服务程序里
+ */
+void timeUpdate(void)
+{
+	trace_printf("tmuTest\n");
 }

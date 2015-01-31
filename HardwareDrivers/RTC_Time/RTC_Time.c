@@ -3,6 +3,7 @@
 #include "RTC_Time.h"
 #include "stm32f10x_conf.h"
 
+
 // 重新配置 RTC 和 BKP，仅在检测到后备寄存器数据丢失时使用
 void RTCTime_Config()
 {
@@ -24,11 +25,15 @@ void RTCTime_Config()
 	RTC_WaitForSynchro();
 	//读写寄存器前，要确定上一个操作已经结束
 	RTC_WaitForLastTask();
+	// 启动 RTC 中断
+	RTC_ITConfig(RTC_IT_SEC, ENABLE);
+	RTC_WaitForLastTask();
 	//设置RTC分频器，使RTC时钟为1Hz
 	//RTCperiod=RTCCLK/RTC_PR=(32.768KHz)/(32767+1)
 	RTC_SetPrescaler(32767);
 	//等待寄存器写入完成
 	RTC_WaitForLastTask();
+
 }
 
 void RTCTime_Init()  // RTC 初始化，上电后调用
@@ -42,6 +47,14 @@ void RTCTime_Init()  // RTC 初始化，上电后调用
 		RTCTime_Config();
 		//配置完成后，向后备寄存器中写特殊字符0xA5A5
 		BKP_WriteBackupRegister(BKP_DR1,0xA5A5);
+	}
+	else
+	{
+		RTC_WaitForSynchro();
+		RTC_WaitForLastTask();
+		// 启动 RTC 秒中断
+		RTC_ITConfig(RTC_IT_SEC, ENABLE);
+		RTC_WaitForLastTask();
 	}
 }
 

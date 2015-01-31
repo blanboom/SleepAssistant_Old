@@ -16,5 +16,6 @@ extern struct tm currentTime;
 
 void timeInit(void);
 int8_t setTime(uint8_t, uint8_t, uint8_t, uint8_t, uint8_t, uint8_t);
+void timeUpdate(void);
 
 #endif /* INCLUDE_TIMEALARM_H_ */
