@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include "diag/Trace.h"
 #include "Motion.h"
+#include "TimeAlarm.h"
+#include "interrupt.h"
+
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -13,10 +16,14 @@
 
 int main(int argc, char* argv[])
 {
-	motionInit();
+	interruptNVICInit();  // NVIC 初始化
+	timeInit();           // RTC 及时间初始化
+	motionInit();         // 动作感应（MPU6050 等）初始化
+
 	while (1)
 	{
-		trace_printf("%d\n", detectMove());
+        //trace_printf("%d\n", detectMove());  // 身体移动
+		//trace_printf(asctime(&currentTime)); // 现在时间
 	}
 }
 
