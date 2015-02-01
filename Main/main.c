@@ -7,6 +7,7 @@
 #include "Motion.h"
 #include "TimeAlarm.h"
 #include "interrupt.h"
+#include "SysTick.h"
 
 
 #pragma GCC diagnostic push
@@ -19,11 +20,15 @@ int main(int argc, char* argv[])
 	interruptNVICInit();  // NVIC 初始化
 	timeInit();           // RTC 及时间初始化
 	motionInit();         // 动作感应（MPU6050 等）初始化
+	systickInit();        // SysTick 初始化
+
+	setTime(2015 - 1900, 1, 1, 14, 42, 30);
 
 	while (1)
 	{
         //trace_printf("%d\n", detectMove());  // 身体移动
 		//trace_printf(asctime(&currentTime)); // 现在时间
+		//delay(400);
 	}
 }
 

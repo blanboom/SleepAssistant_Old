@@ -7,6 +7,7 @@
 #include "interrupt.h"
 #include "stm32f10x_conf.h"
 #include "TimeAlarm.h"
+#include "SysTick.h"
 
 void interruptNVICInit(void)
 {
@@ -28,4 +29,9 @@ void RTC_IRQHandler(void)
 		RTC_ClearITPendingBit(RTC_IT_SEC);
 		RTC_WaitForLastTask();
 	}
+}
+
+void SysTick_Handler(void)
+{
+	systickDelayISR();
 }
