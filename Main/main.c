@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	motionInit();         // 动作感应（MPU6050 等）初始化
 	systickInit();        // SysTick 初始化
 
-	setTime(2015 - 1900, 1, 1, 14, 42, 30);
+	//setTime(2015 - 1900, 1, 1, 14, 42, 30);
 
 	while (1)
 	{
