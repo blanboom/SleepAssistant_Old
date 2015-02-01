@@ -9,11 +9,11 @@
 #include "diag/Trace.h"
 
 // 闹钟和时间的全局变量，靠 RTC 的秒中断更新
-uint8_t alarmHour       = 7;  // 闹钟时
-uint8_t alarmMinute     = 30; // 闹钟分
-uint8_t alarmHourDiff   = 12;
-uint8_t alarmMinuteDiff = 59; // 距闹钟响起还有多少小时多少分钟
-uint8_t alarmON         = 0;  // 闹钟开启指示，0 代表闹钟关闭，其他数值代表闹钟的不同模式（待定）
+volatile int8_t alarmHour       = 7;  // 闹钟时
+volatile int8_t alarmMinute     = 30; // 闹钟分
+volatile int8_t alarmHourDiff   = 12; // 离下一次闹钟响还有多少小时
+volatile int8_t alarmMinuteDiff = 59; // 当前分钟与闹钟分钟之间的差值（可以为负数）
+volatile int8_t alarmON         = 0;  // 闹钟开启指示，0 代表闹钟关闭，其他数值代表闹钟的不同模式（待定）
 struct tm currentTime   = {0, 0, 0, 0, 0, 0, 0, 0, 0}; // 现在的时间
 
 /** 时钟初始化
@@ -47,10 +47,15 @@ int8_t setTime(uint8_t year, uint8_t month, uint8_t day,
 	return 0;
 }
 
-/** 时间更新
+/** 时间与闹钟更新
  * 放在 RTC 的中断服务程序里
  */
-void timeUpdate(void)
+void timeAlarmUpdate(void)
 {
-	trace_printf("tmuTest\n");
+	time_t tmpTime;
+	time(&tmpTime); // 从 RTC 获取时间
+	currentTime = *(localtime(&tmpTime)); // 转换时间格式
+	alarmHourDiff = alarmHour - currentTime.tm_hour;
+	if(alarmHourDiff < 0) { alarmHourDiff += 24; }
+	alarmMinuteDiff = alarmMinute - currentTime.tm_min;
 }

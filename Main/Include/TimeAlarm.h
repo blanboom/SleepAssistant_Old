@@ -10,12 +10,11 @@
 #include "stm32f10x_conf.h"
 #include "RTC_Time.h"
 
-extern uint8_t alarmHour, alarmMinute, alarmHourDiff, alarmMinuteDiff, alarmON;
-extern uint8_t alarmHour;
+extern volatile int8_t alarmHour, alarmMinute, alarmHourDiff, alarmMinuteDiff, alarmON;
 extern struct tm currentTime;
 
 void timeInit(void);
 int8_t setTime(uint8_t, uint8_t, uint8_t, uint8_t, uint8_t, uint8_t);
-void timeUpdate(void);
+void timeAlarmUpdate(void);
 
 #endif /* INCLUDE_TIMEALARM_H_ */
