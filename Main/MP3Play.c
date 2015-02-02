@@ -67,63 +67,62 @@ void mp3Play(void)
 				trace_printf("\r\n文件名为：%s\r\n", finfo.fname);
 
 				result1 = strstr(finfo.fname, ".mp3"); /* 判断是否为音频文件 */
-				result2 = strstr(finfo.fname, ".mid");
+				result2 = strstr(finfo.fname, ".MP3");
 				result3 = strstr(finfo.fname, ".wav");
-				result4 = strstr(finfo.fname, ".wma");
+				result4 = strstr(finfo.fname, ".WAV");
 
-				if(result1 != NULL || result2 != NULL || result3 != NULL || result4 != NULL)
+				if (result1 != NULL || result2 != NULL || result3 != NULL
+						|| result4 != NULL)
 				{
-					if(result1 != NULL)  /* 若是 MP3 文件则读取 MP3 文件信息 */
+					res = f_open(&fsrc, finfo.fname,
+							FA_OPEN_EXISTING | FA_READ); /* 以只读方式打开 */
+					br = 1;
+					TXDCS_SET(0); /* 选择 VS1053 的数据接口 */
+
+					/*--------------- 一曲开始 ---------------*/
+					trace_printf("\r\n开始播放\r\n");
+					for (;;)
 					{
-						res = f_open(&fsrc, finfo.fname, FA_OPEN_EXISTING | FA_READ ); /* 以只读方式打开 */
-						br = 1;
-						TXDCS_SET(0);        /* 选择 VS1053 的数据接口 */
-
-						/*--------------- 一曲开始 ---------------*/
-						trace_printf("\r\n开始播放\r\n");
-						for(;;)
+						res = f_read(&fsrc, buffer, sizeof(buffer), &br);
+						if (res == 0)
 						{
-							res = f_read(&fsrc, buffer, sizeof(buffer), &br);
-							if(res == 0)
-							{
-								count = 0;     /* 512 字节完重新计数 */
+							count = 0; /* 512 字节完重新计数 */
 
-								delay(1000); /* 10ms */
-								while(count < 512) /* SD 卡读取一个 sector，一个 sector 为 512 字节 */
+							delay(5); /* 5ms */
+							while (count < 512) /* SD 卡读取一个 sector，一个 sector 为 512 字节 */
+							{
+								if (DREQ != 0) /* 等待 DREQ 为高，请求数据输入 */
 								{
-									if(DREQ != 0)  /* 等待 DREQ 为高，请求数据输入 */
+									for (j = 0; j < 32; j++)
 									{
-										for(j = 0; j < 32; j++)
-										{
-											VS1053_WriteByte(buffer[count]); /* VS1053 的 FIFO 只有 32 个字节的缓冲 */
-											count++;
-										}
+										VS1053_WriteByte(buffer[count]); /* VS1053 的 FIFO 只有 32 个字节的缓冲 */
+										count++;
 									}
 								}
 							}
-							if(res || (br == 0))
-							{
-								break;
-							}
 						}
-						trace_printf("\r\n播放结束\r\n");
-						/*--------------- 一曲结束 ---------------*/
-						/* 根据 VS1053 的要求，在一曲结束后需发送 2048 个 0 来确保下一首的正常播放 */
-						while ( count < 2048 )
+						if (res || (br == 0))
 						{
-							if ( DREQ != 0 )
+							break;
+						}
+					}
+					trace_printf("\r\n播放结束\r\n");
+					/*--------------- 一曲结束 ---------------*/
+					/* 根据 VS1053 的要求，在一曲结束后需发送 2048 个 0 来确保下一首的正常播放 */
+					while (count < 2048)
+					{
+						if ( DREQ != 0)
+						{
+							for (j = 0; j < 32; j++)
 							{
-								for ( j=0; j<32; j++ )
-								{
-									VS1053_WriteByte( 0 );
-									count++;
-								}
+								VS1053_WriteByte(0);
+								count++;
 							}
 						}
-						count = 0;
-						TXDCS_SET( 1 );   /* 关闭 VS1053 数据端口 */
-						f_close(&fsrc);	  /* 关闭打开的文件 */
 					}
+					count = 0;
+					TXDCS_SET(1); /* 关闭 VS1053 数据端口 */
+					f_close(&fsrc); /* 关闭打开的文件 */
 				}
 			}
 		} /* while (f_readdir(&dirs, &finfo) == FR_OK) */
