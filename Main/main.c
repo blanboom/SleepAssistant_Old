@@ -18,6 +18,7 @@
 
 int main(int argc, char* argv[])
 {
+	trace_printf("System clock: %uHz\n", SystemCoreClock);
 	interruptNVICInit();  // NVIC 初始化
 	timeInit();           // RTC 及时间初始化
 	motionInit();         // 动作感应（MPU6050 等）初始化
