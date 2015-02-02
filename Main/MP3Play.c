@@ -88,7 +88,7 @@ void mp3Play(void)
 						{
 							count = 0; /* 512 字节完重新计数 */
 
-							delay(5); /* 5ms */
+							delay(10); /* 10ms */
 							while (count < 512) /* SD 卡读取一个 sector，一个 sector 为 512 字节 */
 							{
 								if (DREQ != 0) /* 等待 DREQ 为高，请求数据输入 */
