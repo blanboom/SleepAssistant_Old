@@ -56,7 +56,6 @@ void mp3Play(void)
 	{
 		while(f_readdir(&dirs, &finfo) == FR_OK)       /* 依次读文件名 */
 		{
-			//trace_printf("Read!");
 			if(finfo.fattrib & AM_ARC)                 /* 判断是否为存档型文件 */
 			{
 				if(!finfo.fname[0])                   /* 文件名为空即达到了目录的末尾，退出 */
@@ -88,7 +87,7 @@ void mp3Play(void)
 						{
 							count = 0; /* 512 字节完重新计数 */
 
-							delay(10); /* 10ms */
+							delay(4); // 如果加入了操作系统，此处留下的空闲时间可用于执行其他任务
 							while (count < 512) /* SD 卡读取一个 sector，一个 sector 为 512 字节 */
 							{
 								if (DREQ != 0) /* 等待 DREQ 为高，请求数据输入 */
