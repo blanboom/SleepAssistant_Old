@@ -8,6 +8,7 @@
 #include "TimeAlarm.h"
 #include "interrupt.h"
 #include "SysTick.h"
+#include "MP3Play.h"
 
 
 #pragma GCC diagnostic push
@@ -21,6 +22,9 @@ int main(int argc, char* argv[])
 	timeInit();           // RTC 及时间初始化
 	motionInit();         // 动作感应（MPU6050 等）初始化
 	systickInit();        // SysTick 初始化
+	mp3Init();
+
+	mp3Play();
 
 	//setTime(2015 - 1900, 1, 1, 14, 42, 30);
 
