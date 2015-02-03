@@ -15,6 +15,12 @@ void interruptNVICInit(void)
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
 	// 设置 RTC 中断优先级
 	NVIC_InitStructure.NVIC_IRQChannel = RTC_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	// 设置 USART1 中断优先级
+	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -34,4 +40,9 @@ void RTC_IRQHandler(void)
 void SysTick_Handler(void)
 {
 	systickDelayISR();
+}
+
+void USART1_IRQHandler(void)
+{
+	USART1_ISR();
 }
