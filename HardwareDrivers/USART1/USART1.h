@@ -17,6 +17,6 @@ int USART1_Printf(const char* format, ...);
 void USART1_ISR(void);
 
 extern uint8_t USART1_ReadBuffer[USART1_BUFFER_LENTH];
-extern uint8_t USART1_ReadBufferPointer;
+extern volatile uint8_t USART1_ReadBufferPointer;
 
 #endif /* RF_BM_S02_RF_BM_S02_H_ */
