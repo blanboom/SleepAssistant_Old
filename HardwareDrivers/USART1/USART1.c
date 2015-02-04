@@ -4,7 +4,8 @@
 #include "string.h"
 #include "diag/Trace.h"
 
-uint8_t USART1_ReadBuffer[1];  // USART1 接收缓冲区长度，暂定为 1 字节
+uint8_t USART1_ReadBuffer[USART1_BUFFER_LENTH];  // USART1 接收缓冲区长度，暂定为 1 字节
+uint8_t USART1_ReadBufferPointer = 0;  // USART1 接收缓冲区指针
 
 void USART1_Init(void)
 {
@@ -61,7 +62,11 @@ void USART1_ISR(void)
 {
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)
 	{
-	    USART1_ReadBuffer[0]=USART1->DR;
-	  	trace_printf("U1:%c\n", USART1_ReadBuffer[0]);    //将接受到的数据直接返回打印
+	    USART1_ReadBuffer[USART1_ReadBufferPointer]=USART1->DR;
+	  	trace_printf("U1:%c\n", USART1_ReadBuffer[USART1_ReadBufferPointer]);    //将接受到的数据直接返回打印
+	  	if(USART1_ReadBufferPointer >= USART1_BUFFER_LENTH)
+	  	{
+	  		USART1_ReadBufferPointer = 0;
+	  	}
 	}
 }
