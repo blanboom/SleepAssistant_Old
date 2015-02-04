@@ -8,6 +8,6 @@
 #ifndef INCLUDE_APP_ALARM_H_
 #define INCLUDE_APP_ALARM_H_
 
-
+void alarmApp(void);
 
 #endif /* INCLUDE_APP_ALARM_H_ */

@@ -9,6 +9,8 @@
 #include "interrupt.h"
 #include "SysTick.h"
 #include "MP3Play.h"
+#include "USART1.h"
+#include "App_Alarm.h"
 
 
 #pragma GCC diagnostic push
@@ -24,13 +26,11 @@ int main(int argc, char* argv[])
 	motionInit();         // 动作感应（MPU6050 等）初始化
 	systickInit();        // SysTick 初始化
 	mp3Init();
-
-	mp3Play();
-
-	//setTime(2015 - 1900, 1, 1, 14, 42, 30);
+	USART1_Init();
 
 	while (1)
 	{
+		alarmApp();
         //trace_printf("%d\n", detectMove());  // 身体移动
 		//trace_printf(asctime(&currentTime)); // 现在时间
 		//delay(400);
