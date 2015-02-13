@@ -9,24 +9,16 @@
 #include "USART1.h"
 #include <stdio.h>
 #include "diag/Trace.h"
+#include "TimeAlarm.h"
+#include "MP3Play.h"
 
-/* 相关函数的定义 */
-int16_t getInput(void);
-void displayMessege(uint8_t);
-void setAlarm(int16_t);
-int16_t alarmTimeDiff(void);
-int8_t playAlarmMusic(void);
-void setSnooze(int16_t);
-uint8_t checkAlarmFormat(int16_t);
-uint8_t checkSnoozeFormat(int16_t);
-
-#define ALARM_MUSIC_END 0
-#define FORMAT_OK		0
-#define FORMAT_ERROR	(-1)
+/* 相关常量定义 */
+#define ALARM_MUSIC_END 0      // 闹钟音乐播放完毕
+#define FORMAT_OK		0	   // 格式正确
+#define FORMAT_ERROR	(-1)   // 格式错误
 
 /* 输入信息定义
  * 作为函数的返回值供函数 getInput() 使用
- *
  * getInput() 将获取并返回键盘或触摸屏等设备中输入的控制命令或闹钟时间值
  */
 #define INPUT_ERROR    (-1)
@@ -35,12 +27,8 @@ uint8_t checkSnoozeFormat(int16_t);
 #define INPUT_ALARM_ON (-4)
 #define NO_INPUT	   (-10)
 
-/* 输入命令缓冲区 */
-uint8_t commandInputBuffer[5];
-
 /* 输出信息定义
  * 作为为函数的参数供函数 displayMessege() 使用
- *
  * displayMessege() 用于在显示屏上显示相关的提示信息
  */
 #define MESSEGE_SET_ALARM_TIME 	(0)  // 提示：设置闹钟时间
@@ -59,6 +47,14 @@ enum alarmStates
 	PLAY_ALARM_MUSIC,		// 播放闹钟音乐
 	SET_SNOOZE_TIME			// 设置贪睡时间
 } alarmState = ALARM_OFF;	// 默认状态：闹钟关闭
+
+/* 相关函数的定义 */
+int16_t getInput(void);
+void displayMessege(uint8_t);
+void setAlarm(int16_t);
+// void setSnooze(int16_t); (设置贪睡时间的功能尚未启用）
+uint8_t checkAlarmFormat(int16_t);
+uint8_t checkSnoozeFormat(int16_t);
 
 /*
  * 闹钟主程序，需要放入 while(1) 中循环调用
@@ -105,7 +101,7 @@ void alarmApp(void)
 	 */
 	case WATING_FOR_ALARM:
 		displayMessege(MESSEGE_WAITING); // 显示等待闹钟响起的信息，例如离闹钟响起还有多长时间
-		if (alarmTimeDiff() <= 0) // 检查离闹钟响起还有多少时间，如果时间小于等于零（到达闹钟时间）
+		if (alarmHourDiff == 0 && alarmMinuteDiff <= 1) // 检查离闹钟响起还有多少时间，如果时间小于等于零（到达闹钟时间）
 		{
 			alarmState = PLAY_ALARM_MUSIC;  // 进入下一个状态：播放闹钟音乐
 		}
@@ -123,39 +119,25 @@ void alarmApp(void)
 	 */
 	case PLAY_ALARM_MUSIC:
 		displayMessege(MESSEGE_GET_UP);  // 显示消息：“该起床了”
-		if(playAlarmMusic() == ALARM_MUSIC_END) // 播放闹钟音乐
-		{ // 若音乐播放完毕
-			displayMessege(MESSEGE_CLEAR);
-			alarmState = ALARM_OFF; // 进入状态：闹钟关闭
-		}
-		input = getInput();
-		if(input == INPUT_SNOOZE) // 若输入了“小睡”的命令
-		{
-			displayMessege(MESSEGE_SET_SNOOZE_TIME); // 显示消息：“请设置小睡时间”
-			alarmState = SET_SNOOZE_TIME; // 进入状态：设置小睡时间
-		}
-		if(input == INPUT_CANCEL) // 若输入了“取消”命令
-		{
-			displayMessege(MESSEGE_CLEAR);
-			alarmState = ALARM_OFF;   // 进入状态：闹钟关闭
-		}
+		mp3Play();
+		alarmState = ALARM_OFF;   // 进入状态：闹钟关闭
 		break;
-	/* 状态：设置小睡时间
-	 * 在此状态中，将从输入获取小睡时间，并将闹钟时间加上小睡时间，进入状态：等待闹钟响起
-	 */
-	case SET_SNOOZE_TIME:
-		input = getInput(); // 获取输入
-		if(input == INPUT_CANCEL)
-		{   // 若输入“取消”，则进入“闹钟关闭”的状态
-			displayMessege(MESSEGE_CLEAR);
-			alarmState = ALARM_OFF;
-		}
-		else if(checkSnoozeFormat(input) == FORMAT_OK)
-		{   // 若输入格式正确
-			setSnooze(input);  // 设置新的闹钟时间
-			alarmState = WATING_FOR_ALARM;  // 进入状态：等待闹钟响起
-		}
-		break;
+//	/* 状态：设置小睡时间(暂未启用)
+//	 * 在此状态中，将从输入获取小睡时间，并将闹钟时间加上小睡时间，进入状态：等待闹钟响起
+//	 */
+//	case SET_SNOOZE_TIME:
+//		input = getInput(); // 获取输入
+//		if(input == INPUT_CANCEL)
+//		{   // 若输入“取消”，则进入“闹钟关闭”的状态
+//			displayMessege(MESSEGE_CLEAR);
+//			alarmState = ALARM_OFF;
+//		}
+//		else if(checkSnoozeFormat(input) == FORMAT_OK)
+//		{   // 若输入格式正确
+//			setSnooze(input);  // 设置新的闹钟时间
+//			alarmState = WATING_FOR_ALARM;  // 进入状态：等待闹钟响起
+//		}
+//		break;
 	default:
 		displayMessege(MESSEGE_CLEAR);
 		alarmState = ALARM_OFF;
@@ -202,7 +184,8 @@ void displayMessege(uint8_t msg)
 		trace_printf("闹钟已打开\n");
 		break;
 	case MESSEGE_WAITING:
-		trace_printf("等待闹钟\n");
+		trace_printf("等待闹钟：");
+		trace_printf(asctime(&currentTime));
 		break;
 	case MESSEGE_SET_SNOOZE_TIME:
 		trace_printf("请设置小睡时间\n");
@@ -212,30 +195,19 @@ void displayMessege(uint8_t msg)
 		break;
 	}
 }
+
 void setAlarm(int16_t alarm)
 {
+	alarmHour = alarm / 100;
+	alarmMinute = alarm % 100;
 	trace_printf("闹钟时间已设置:%d\n", alarm);
 }
 
-int16_t alarmTimeDiff(void)
-{
-	static uint16_t counter = 100;
-	counter--;
-	return counter;
-}
-
-int8_t playAlarmMusic(void)
-{
-	static uint16_t counter = 100;
-	counter--;
-	trace_printf("正在播放音乐：%d\n", counter);
-	return counter;
-}
-
-void setSnooze(int16_t snoozeTime)
-{
-	trace_printf("小睡时间已设置：%d\n", snoozeTime);
-}
+// 设置小睡时间（暂未启用）
+//void setSnooze(int16_t snoozeTime)
+//{
+//	trace_printf("小睡时间已设置：%d\n", snoozeTime);
+//}
 
 uint8_t checkAlarmFormat(int16_t dat)
 {
@@ -251,6 +223,7 @@ uint8_t checkAlarmFormat(int16_t dat)
 		return FORMAT_ERROR;
 	}
 }
+
 uint8_t checkSnoozeFormat(int16_t dat)
 {
 	if(dat > 0 && dat <= 99)

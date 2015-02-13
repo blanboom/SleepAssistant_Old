@@ -63,7 +63,7 @@ void mp3Play(void)
 					break;
 				}
 
-				trace_printf("\r\n文件名为：%s\r\n", finfo.fname);
+				trace_printf("文件名为：%s\r\n", finfo.fname);
 
 				result1 = strstr(finfo.fname, ".mp3"); /* 判断是否为音频文件 */
 				result2 = strstr(finfo.fname, ".MP3");
@@ -79,7 +79,7 @@ void mp3Play(void)
 					TXDCS_SET(0); /* 选择 VS1053 的数据接口 */
 
 					/*--------------- 一曲开始 ---------------*/
-					trace_printf("\r\n开始播放\r\n");
+					trace_printf("开始播放\r\n");
 					for (;;)
 					{
 						res = f_read(&fsrc, buffer, sizeof(buffer), &br);
@@ -105,7 +105,7 @@ void mp3Play(void)
 							break;
 						}
 					}
-					trace_printf("\r\n播放结束\r\n");
+					trace_printf("播放结束\r\n");
 					/*--------------- 一曲结束 ---------------*/
 					/* 根据 VS1053 的要求，在一曲结束后需发送 2048 个 0 来确保下一首的正常播放 */
 					while (count < 2048)

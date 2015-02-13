@@ -27,12 +27,12 @@ int main(int argc, char* argv[])
 	systickInit();        // SysTick 初始化
 	mp3Init();
 	USART1_Init();
+	trace_printf(asctime(&currentTime)); // 现在时间
 
 	while (1)
 	{
 		alarmApp();
         //trace_printf("%d\n", detectMove());  // 身体移动
-		//trace_printf(asctime(&currentTime)); // 现在时间
 		//delay(400);
 	}
 }
