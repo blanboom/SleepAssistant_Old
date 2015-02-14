@@ -11,6 +11,9 @@
  */
 #include "MPU6050.h"
 
+extern uint32_t sleepWellStat;
+extern uint32_t sleepBadStat;
+
 /**
  * 设备方向
  */
@@ -25,5 +28,7 @@ bool motionInit(void);
 void getZeroMotionValue(void);
 int8_t getDevicePosition(void);
 bool detectMove(void);
+void sleepStat(void);
+void clearSleepStatData(void);
 
 #endif /* INCLUDE_MOTION_H_ */

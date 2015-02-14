@@ -11,6 +11,7 @@
 #include "diag/Trace.h"
 #include "TimeAlarm.h"
 #include "MP3Play.h"
+#include "Motion.h"
 
 /* 相关常量定义 */
 #define ALARM_MUSIC_END 0      // 闹钟音乐播放完毕
@@ -54,7 +55,9 @@ void displayMessege(uint8_t);
 void setAlarm(int16_t);
 // void setSnooze(int16_t); (设置贪睡时间的功能尚未启用）
 uint8_t checkAlarmFormat(int16_t);
-uint8_t checkSnoozeFormat(int16_t);
+//uint8_t checkSnoozeFormat(int16_t);
+
+int lastTime = 0;
 
 /*
  * 闹钟主程序，需要放入 while(1) 中循环调用
@@ -92,6 +95,7 @@ void alarmApp(void)
 		{
 			displayMessege(MESSEGE_ALARM_IS_ON); // 显示“成功设置闹钟，闹钟已启动”
 			setAlarm(input); // 根据输入值设置闹钟
+			clearSleepStatData();
 			alarmState = WATING_FOR_ALARM; // 进入下一状态：等待闹钟响起
 		}
 		break;
@@ -100,7 +104,12 @@ void alarmApp(void)
 	 * 同时，在此状态中也会检查输入，如果输入了“取消”的命令，则进入闹钟关闭的状态
 	 */
 	case WATING_FOR_ALARM:
-		displayMessege(MESSEGE_WAITING); // 显示等待闹钟响起的信息，例如离闹钟响起还有多长时间
+		sleepStat(); /* 判断睡眠质量 */
+		if(currentTime.tm_sec != lastTime) // 每隔一秒
+		{
+			lastTime = currentTime.tm_sec;
+			displayMessege(MESSEGE_WAITING); // 显示等待闹钟响起的信息，例如离闹钟响起还有多长时间
+		}
 		if (alarmHourDiff == 0 && alarmMinuteDiff <= 1) // 检查离闹钟响起还有多少时间，如果时间小于等于零（到达闹钟时间）
 		{
 			alarmState = PLAY_ALARM_MUSIC;  // 进入下一个状态：播放闹钟音乐
@@ -191,7 +200,7 @@ void displayMessege(uint8_t msg)
 		trace_printf("请设置小睡时间\n");
 		break;
 	case MESSEGE_GET_UP:
-		trace_printf("起床啦\n");
+		trace_printf("起床啦，睡眠质量为：%d\n", (sleepWellStat*100) / (sleepWellStat + sleepBadStat));
 		break;
 	}
 }
@@ -224,14 +233,14 @@ uint8_t checkAlarmFormat(int16_t dat)
 	}
 }
 
-uint8_t checkSnoozeFormat(int16_t dat)
-{
-	if(dat > 0 && dat <= 99)
-	{
-		return FORMAT_OK;
-	}
-	else
-	{
-		return FORMAT_ERROR;
-	}
-}
+//uint8_t checkSnoozeFormat(int16_t dat)
+//{
+//	if(dat > 0 && dat <= 99)
+//	{
+//		return FORMAT_OK;
+//	}
+//	else
+//	{
+//		return FORMAT_ERROR;
+//	}
+//}

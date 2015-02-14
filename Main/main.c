@@ -27,6 +27,8 @@ int main(int argc, char* argv[])
 	systickInit();        // SysTick 初始化
 	mp3Init();
 	USART1_Init();
+
+	getZeroMotionValue();  // 可在以后启动时增加校准程序
 	trace_printf(asctime(&currentTime)); // 现在时间
 
 	while (1)

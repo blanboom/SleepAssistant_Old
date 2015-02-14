@@ -13,6 +13,9 @@
 uint16_t moveSensitivity = 330;   // 判断身体移动的灵敏度，越小越灵敏，在此处使用变量而不使用宏定义，
 								  // 是为了以后可以添加自动灵敏度校准程序
 
+uint32_t sleepWellStat = 0;
+uint32_t sleepBadStat  = 0;
+
 // 私有函数
 void mpuSoftwareDelay(__IO uint32_t nCount);
 
@@ -178,6 +181,37 @@ bool detectMove(void)
 	}
 }
 
+void sleepStat(void)
+{
+	static uint16_t counter = 0;
+	static uint16_t sleepBadCounter = 0;
+	if(detectMove() == 1)
+	{
+		sleepBadCounter++;
+	}
+	counter++;
+	if (counter >= 1000)
+	{
+		counter = 0;
+		if(sleepBadCounter >= 2)
+		{
+			sleepBadStat++;
+			trace_printf("b\n");
+		}
+		else
+		{
+			sleepWellStat++;
+			trace_printf("a\n");
+		}
+		sleepBadCounter = 0;
+	}
+}
+
+void clearSleepStatData(void)
+{
+	sleepWellStat = 0;
+	sleepBadStat  = 0;
+}
 /**
  * 软件延时
  */
