@@ -43,12 +43,22 @@
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.createflash.954971156" name="Create flash image" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.createflash" value="true" valueType="boolean"/>
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize.909083294" name="Print size" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.addtools.printsize" value="true" valueType="boolean"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform.1539040055" isAbstract="false" osList="all" superClass="ilg.gnuarmeclipse.managedbuild.cross.targetPlatform"/>
-							<builder buildPath="${workspace_loc:/SleepAssistant}/Debug" id="ilg.gnuarmeclipse.managedbuild.cross.builder.1711864958" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="ilg.gnuarmeclipse.managedbuild.cross.builder"/>
+							<builder buildPath="${workspace_loc:/SleepAssistant}/Debug" id="ilg.gnuarmeclipse.managedbuild.cross.builder.1711864958" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" superClass="ilg.gnuarmeclipse.managedbuild.cross.builder">
+								<outputEntries>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Debug"/>
+									<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="outputPath" name="Release"/>
+								</outputEntries>
+							</builder>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.2123481052" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.1583596063" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.90800106" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/USART1&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/VS1053&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/RTC_Time&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/SDIO_SDCard&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/MPU6050&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../Main/Include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../Main/fatfs9&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../System/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../System/Include/CMSIS&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../System/Include/stm32f1-stdperiph&quot;"/>
@@ -66,6 +76,11 @@
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1493917088" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.733543987" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/USART1&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/VS1053&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../Main/fatfs9&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/SDIO_SDCard&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/RTC_Time&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/MPU6050&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../Main/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../System/Include&quot;"/>
@@ -85,6 +100,11 @@
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.1085574021" name="Cross ARM C++ Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.compiler.include.paths.310107424" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.cpp.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/USART1&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/VS1053&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../Main/fatfs9&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/RTC_Time&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/SDIO_SDCard&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../HardwareDrivers/MPU6050&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../Main/Include&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;../System/Include&quot;"/>
@@ -155,7 +175,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="HardwareDrivers"/>
+						<entry excluding="SDID_SDCard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="HardwareDrivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
 						<entry excluding="Main/stm32f1-stdperiph/stm32f10x_rtc.c|Main/stm32f1-stdperiph/stm32f10x_wwdg.c|Main/stm32f1-stdperiph/stm32f10x_tim.c|Main/stm32f1-stdperiph/stm32f10x_dma.c|Main/stm32f1-stdperiph/stm32f10x_bkp.c|Main/stm32f1-stdperiph/stm32f10x_crc.c|Main/stm32f1-stdperiph/stm32f10x_can.c|Main/stm32f1-stdperiph/stm32f10x_dac.c|Main/stm32f1-stdperiph/stm32f10x_pwr.c|Main/stm32f1-stdperiph/stm32f10x_spi.c|Main/stm32f1-stdperiph/stm32f10x_exti.c|Main/stm32f1-stdperiph/stm32f10x_sdio.c|Main/stm32f1-stdperiph/stm32f10x_cec.c|Main/stm32f1-stdperiph/stm32f10x_dbgmcu.c|Main/stm32f1-stdperiph/stm32f10x_adc.c|Main/stm32f1-stdperiph/stm32f10x_i2c.c|Main/stm32f1-stdperiph/stm32f10x_iwdg.c|Main/stm32f1-stdperiph/stm32f10x_flash.c|Main/stm32f1-stdperiph/stm32f10x_usart.c|Main/stm32f1-stdperiph/stm32f10x_fsmc.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="System"/>
 					</sourceEntries>
@@ -316,15 +336,6 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="SleepAssistant.ilg.gnuarmeclipse.managedbuild.cross.target.elf.1685704907" name="Executable" projectType="ilg.gnuarmeclipse.managedbuild.cross.target.elf"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.53026673;ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.53026673.;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1930207732;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.585692860">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.868390646;ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.868390646.;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1493917088;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.925745464">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		</scannerConfigBuildInfo>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
 		<configuration configurationName="Debug">
@@ -333,5 +344,18 @@
 		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/SleepAssistant"/>
 		</configuration>
+	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.internal.ui.text.commentOwnerProjectMappings"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.53026673;ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.53026673.;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1930207732;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.585692860">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.868390646;ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.868390646.;ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.1085574021;ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.input.1832337608">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.868390646;ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.868390646.;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1493917088;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.925745464">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>
