@@ -1,10 +1,6 @@
-/**
-  ******************************************************************************
-  * @file    MP3Play.c
-  * @date    2-May-2011
-  * @brief   mp3 应用函数库
-  ******************************************************************************
-  */
+/** MP3Play.c - MP3 应用函数库
+ * 程序来源于《STM32库开发实战指南》随书光盘，有修改
+ */
 
 #include "MP3Play.h"
 #include "SysTick.h"
@@ -18,8 +14,6 @@
 #define FALSE 0
 
 uint8_t readBuf[READBUF_SIZE];      /* 用于存储 MP3 帧头信息 */
-struct tag_info id3v1;              /* ID3V1 结构体变量，用于储存歌曲附加信息 */
-struct tag_info id3v2;              /* ID3V2 结构体变量，用于储存歌曲附加信息 */
 
 void mp3Init(void)
 {

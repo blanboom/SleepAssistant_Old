@@ -1,29 +1,42 @@
-/**
- * Motion.c
- *
- * 动作监测与识别
+/** Motion.c - 运动监测与识别
+ * 监测睡眠质量、设备方向等的相关程序
  */
+
 #include "Motion.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "diag/Trace.h"
 
-#define MPU_VALUE_LENGTH (10)     // MPU 读取数值数组的长度，长度越长，执行滤波算法是滤波越平滑
-uint16_t moveSensitivity = 330;   // 判断身体移动的灵敏度，越小越灵敏，在此处使用变量而不使用宏定义，
-								  // 是为了以后可以添加自动灵敏度校准程序
+/* 相关常量与变量 *****************************************************************************/
+#define MPU_VALUE_LENGTH (10)  // MPU 读取数值数组的长度，长度越长，执行滤波算法是滤波越平滑
 
+/** 睡眠质量监测的灵敏度
+ * 越小越灵敏
+ * 在此处使用变量而不使用宏定义，是为了以后可以添加自动灵敏度校准程序
+ */
+uint16_t moveSensitivity = 330;
+
+/** 睡眠质量统计的所需的变量
+ * 在一个时间段内，若判断到睡眠质量较好，则 sleepWellStat 加一
+ *                                否则 sleepBadStat 加一
+ * 起床时，通过 sleepWellStat 与 sleepWellStat 的比值可得出睡眠质量
+ */
 uint32_t sleepWellStat = 0;
 uint32_t sleepBadStat  = 0;
-
-// 私有函数
-void mpuSoftwareDelay(__IO uint32_t nCount);
 
 int16_t mpuValue[MPU_VALUE_LENGTH - 1][6];   // 存放 MPU6050 读取值，前三个值为加速度，后三个值为角速度
 int16_t mpuZeroValue[6];     // MPU6050 初始值
 
-/**
- * 初始化 MPU6050
+/* 相关函数 ***********************************************************************************/
+void mpuSoftwareDelay(__IO uint32_t nCount);
+
+
+/** bool motionInit(void) - 运动监测初始化
+ * 初始化 MPU6050 等设备
+ * 输出：
+ * 		TRUE  - 初始化成功
+ * 		FALSE - 初始化失败
  */
 bool motionInit(void)
 {
@@ -45,8 +58,8 @@ bool motionInit(void)
 #endif
 }
 
-/*
- * 获取在正常情况下 MPU6050 的初始值
+/** void getZeroMotionValue(void) - 获取在正常情况下 MPU6050 的初始值
+ * 本操作需要在设备放稳时进行
  */
 void getZeroMotionValue(void)
 {
@@ -96,12 +109,12 @@ void getZeroMotionValue(void)
 #endif
 }
 
-/**
- * 获得设备方向
- * 	判断 z 轴加速度值，
- * 	  如果大于一定值则返回“上”(DEVICE_POSITION_UP)，
+/** int8_t getDevicePosition(void) - 获得设备方向
+ * 	通过判断 z 轴加速度值来判断设备方向
+ * 	  如果 z 轴加速度值大于一定值则返回“上”(DEVICE_POSITION_UP)，
  * 	  如果小于一定值则返回“下”(DEVICE_POSITION_DOWN)，
- * 	  如果不满足这两种情况，说明设备正在翻转或收到震动，返回“不稳定”(DEVICE_POSITION_UNSTABLE)
+ * 	  如果不满足这两种情况，说明设备正在翻转或受到震动，返回“不稳定”(DEVICE_POSITION_UNSTABLE)
+ *
  * 	为得到更加稳定的结果，可以在一定时间间隔内调用两次或多次该函数，若返回的结果一致，说明此时设备的方向稳定
  */
 int8_t getDevicePosition(void)
@@ -122,9 +135,9 @@ int8_t getDevicePosition(void)
 	}
 }
 
-/**
- * 判断是否有身体移动
- * 	如果有身体移动则返回 1，可在一段时间内对此函数执行固定次数，统计次数并根据这个次数判断这段时间的睡眠质量
+/** bool detectMove(void) - 判断是否有身体移动
+ * 通过角速度来判断，如果有身体移动则返回 1，否则返回 0
+ * 可在一段时间内对此函数执行固定次数，统计次数并根据这个次数判断这段时间的睡眠质量
  */
 bool detectMove(void)
 {
@@ -181,6 +194,10 @@ bool detectMove(void)
 	}
 }
 
+/** void sleepStat(void) - 判断睡眠质量
+ * 本函数通过多次调用 detectMove() 来判断睡眠质量，
+ * 		并统计在 sleepBadStat 和 sleepWellStat 中
+ */
 void sleepStat(void)
 {
 	static uint16_t counter = 0;
@@ -196,25 +213,27 @@ void sleepStat(void)
 		if(sleepBadCounter >= 2)
 		{
 			sleepBadStat++;
-			trace_printf("b\n");
+			trace_printf("SleepBad\n");
 		}
 		else
 		{
 			sleepWellStat++;
-			trace_printf("a\n");
+			trace_printf("SleepGood\n");
 		}
 		sleepBadCounter = 0;
 	}
 }
 
+/** void clearSleepStatData(void) - 清除睡眠质量相关数据
+ * 	使 sleepBadStat 和 sleepWellStat 归零
+ */
 void clearSleepStatData(void)
 {
 	sleepWellStat = 0;
 	sleepBadStat  = 0;
 }
-/**
- * 软件延时
- */
+
+/* 软件延时 */
 void mpuSoftwareDelay(__IO uint32_t nCount)
 {
 	for (; nCount != 0; nCount--)

@@ -1,7 +1,6 @@
-/*
- * App_Alarm.c
+/** App_Alarm.c - 闹钟程序
  *
- * 闹钟程序，采用有限状态机实现
+ ***********************************************************************
  * 数据接收格式：单个字母代表命令，若输入数值，后面跟上字母 l（闹钟） 或 s（小睡）
  */
 
@@ -13,12 +12,12 @@
 #include "MP3Play.h"
 #include "Motion.h"
 
-/* 相关常量定义 */
+/* 相关常量 *****************************************************************************/
 #define ALARM_MUSIC_END 0      // 闹钟音乐播放完毕
 #define FORMAT_OK		0	   // 格式正确
 #define FORMAT_ERROR	(-1)   // 格式错误
 
-/* 输入信息定义
+/** 输入信息
  * 作为函数的返回值供函数 getInput() 使用
  * getInput() 将获取并返回键盘或触摸屏等设备中输入的控制命令或闹钟时间值
  */
@@ -28,7 +27,7 @@
 #define INPUT_ALARM_ON (-4)
 #define NO_INPUT	   (-10)
 
-/* 输出信息定义
+/** 输出信息
  * 作为为函数的参数供函数 displayMessege() 使用
  * displayMessege() 用于在显示屏上显示相关的提示信息
  */
@@ -49,7 +48,10 @@ enum alarmStates
 	SET_SNOOZE_TIME			// 设置贪睡时间
 } alarmState = ALARM_OFF;	// 默认状态：闹钟关闭
 
-/* 相关函数的定义 */
+/* 相关变量 *****************************************************************************/
+int lastTime = 0;
+
+/* 相关函数 *****************************************************************************/
 int16_t getInput(void);
 void displayMessege(uint8_t);
 void setAlarm(int16_t);
@@ -57,10 +59,8 @@ void setAlarm(int16_t);
 uint8_t checkAlarmFormat(int16_t);
 //uint8_t checkSnoozeFormat(int16_t);
 
-int lastTime = 0;
-
-/*
- * 闹钟主程序，需要放入 while(1) 中循环调用
+/** void alarmApp(void) - 闹钟主程序
+ * 需要放入 while(1) 中循环调用
  */
 void alarmApp(void)
 {
@@ -153,6 +153,9 @@ void alarmApp(void)
 	}
 }
 
+/** int16_t getInput(void) - 获取输入信息
+ * 获取输入指令，经过处理后返回
+ */
 int16_t getInput(void)
 {
 	uint8_t i = 0;
@@ -179,6 +182,11 @@ int16_t getInput(void)
 	return NO_INPUT;
 }
 
+/** void displayMessege(uint8_t msg) - 显示相关信息
+ * 显示相关信息，根据需要修改里面的内容，例如显示在 LCD 屏幕上
+ * 输入：
+ * 		msg 代表需要显示的信息
+ */
 void displayMessege(uint8_t msg)
 {
 	switch (msg)
@@ -205,6 +213,11 @@ void displayMessege(uint8_t msg)
 	}
 }
 
+/** void setAlarm(int16_t alarm) - 设置闹钟
+ * 设置闹钟
+ * 输入：
+ * 		四位数字，前两位代表时，后两位代表分
+ */
 void setAlarm(int16_t alarm)
 {
 	alarmHour = alarm / 100;
@@ -218,6 +231,14 @@ void setAlarm(int16_t alarm)
 //	trace_printf("小睡时间已设置：%d\n", snoozeTime);
 //}
 
+/** uint8_t checkAlarmFormat(int16_t dat) - 检查闹钟格式
+ * 检查闹钟格式是否正确
+ * 输入：
+ * 		闹钟时间
+ * 输出：
+ * 		FORMAT_OK    - 闹钟格式正确
+ * 		FORMAT_ERROR - 闹钟格式错误
+ */
 uint8_t checkAlarmFormat(int16_t dat)
 {
 	if(dat / 100 >= 0 &&

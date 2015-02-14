@@ -1,8 +1,5 @@
-/*
- * interrupt.h
- *
- *  Created on: 2015年1月31日
- *      Author: maxz
+/** interrput.h - 中断相关程序
+ * 包含中断服务程序和中断初始化函数
  */
 
 #ifndef INCLUDE_INTERRUPT_H_

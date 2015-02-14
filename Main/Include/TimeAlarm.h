@@ -1,7 +1,4 @@
-/*
- * TimeAlarm.h
- *
- *  时钟和闹钟相关函数
+/** TimeAlarm.c - 维持时间更新，处理时间和闹钟
  */
 
 #ifndef INCLUDE_TIMEALARM_H_

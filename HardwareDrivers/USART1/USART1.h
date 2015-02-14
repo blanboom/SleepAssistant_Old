@@ -1,8 +1,4 @@
-/*
- * RF-BM-S02.h
- *
- *  Created on: 2014年11月23日
- *      Author: maxz
+/** USART1.h - USART1 相关程序
  */
 
 #ifndef USART1_H_

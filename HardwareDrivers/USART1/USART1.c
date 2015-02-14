@@ -1,3 +1,6 @@
+/** USART1.c - USART1 相关程序
+ */
+
 #include "USART1.h"
 #include <stdarg.h>
 #include <stdio.h>

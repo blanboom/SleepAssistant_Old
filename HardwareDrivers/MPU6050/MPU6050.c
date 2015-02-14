@@ -1,4 +1,5 @@
-// 来源：https://github.com/Harinadha/STM32_MPU6050lib
+/* 来源：https://github.com/Harinadha/STM32_MPU6050lib */
+
 //MPU6050 I2C library for ARM STM32F103xx Microcontrollers - Main source file
 //Has bit, byte and buffer I2C R/W functions
 // 23/05/2012 by Harinadha Reddy Chintalapalli <harinath.ec@gmail.com>

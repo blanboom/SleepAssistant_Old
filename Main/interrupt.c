@@ -1,14 +1,16 @@
-/*
- * interrupt.c
- *
- * 中断相关函数
+/** interrput.c - 中断相关程序
+ * 包含中断服务程序和中断初始化函数
  */
 
 #include "interrupt.h"
 #include "stm32f10x_conf.h"
 #include "TimeAlarm.h"
 #include "SysTick.h"
+#include "USART1.h"
 
+/** void interruptNVICInit(void) - 中断初始化程序
+ * 初始化 NVIC，设置中断优先级
+ */
 void interruptNVICInit(void)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;

@@ -1,9 +1,7 @@
-/*
- * RTC_Time.h
- *
- *  Created on: 2014年11月16日
- *      Author: maxz
+/** RTC_Time.c - RTC 配置、时间读写所需的基础程序
+ * 参考资料：http://www.ichanging.org/stm32-rtc.html
  */
+
 #ifndef _RTC_TIME_H_
 #define _RTC_TIME_H_
 

@@ -1,10 +1,13 @@
-//参考资料：http://www.ichanging.org/stm32-rtc.html
+/** RTC_Time.c - RTC 配置、时间读写所需的基础程序
+ * 参考资料：http://www.ichanging.org/stm32-rtc.html
+ */
 
 #include "RTC_Time.h"
 #include "stm32f10x_conf.h"
 
-
-// 重新配置 RTC 和 BKP，仅在检测到后备寄存器数据丢失时使用
+/** void RTCTime_Config() - RTC 配置
+ * 重新配置 RTC 和 BKP，仅在检测到后备寄存器数据丢失时使用
+ */
 void RTCTime_Config()
 {
 	// 启用PWR和BKP的时钟（fromAPB1）
@@ -36,7 +39,10 @@ void RTCTime_Config()
 
 }
 
-void RTCTime_Init()  // RTC 初始化，上电后调用
+/** void RTCTime_Init() - RTC 初始化
+ * RTC 初始化，上电后调用
+ */
+void RTCTime_Init()
 {
 	//在BKP的后备寄存器1中，存了一个特殊字符0xA5A5
 	//第一次上电或后备电源掉电后，该寄存器数据丢失，
@@ -58,7 +64,9 @@ void RTCTime_Init()  // RTC 初始化，上电后调用
 	}
 }
 
-// 设置 time_t 格式的时间
+/** void RTCTime_SetUnixTime(time_t time) - 设置时间，time_t 格式
+ * 设置 time_t 格式的时间
+ */
 void RTCTime_SetUnixTime(time_t time)
 {
 	RTC_WaitForLastTask();
@@ -68,7 +76,9 @@ void RTCTime_SetUnixTime(time_t time)
 	RTC_WaitForLastTask();
 }
 
-// 与 C 标准库中的 time() 用法相同，获取 time_t 格式的时间
+/** time_t time(time_t* timer) - 获取时间
+ * 从 RTC 中读取时间，用于代替标准库中的 time()
+ */
 time_t time(time_t* timer)
 {
 	time_t tmp = (uint32_t)RTC_GetCounter();
