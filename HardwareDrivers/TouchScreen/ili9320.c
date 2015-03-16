@@ -1,4 +1,4 @@
-#include "stm32f10x_lib.h"
+#include "stm32f10x_conf.h"
 #include "ili9320.h"
 #include "ili9320_font.h"
 
@@ -17,7 +17,7 @@ typedef struct
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /*******************************************************************************
-* Function Name  : LCD_CtrlLinesConfig	 Òý½ÅIOÅäÖÃ
+* Function Name  : LCD_CtrlLinesConfig	 ï¿½ï¿½ï¿½ï¿½IOï¿½ï¿½ï¿½ï¿½
 * Description    : Configures LCD Control lines (FSMC Pins) in alternate function
                    Push-Pull mode.
 * Input          : None
@@ -62,7 +62,7 @@ void LCD_CtrlLinesConfig(void)
 }
 
 /*******************************************************************************
-* Function Name  : //±³¹â¿ØÖÆ½ÅA1
+* Function Name  : //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ½ï¿½A1
 * Description    : 
 * Input          : None
 * Output         : None
@@ -80,7 +80,7 @@ void LCD_LightPin(void)
   GPIO_SetBits(GPIOA, GPIO_Pin_1);
 }
 /*******************************************************************************
-* Function Name  : LCD_FSMCConfig	  FSMCÅäÖÃ
+* Function Name  : LCD_FSMCConfig	  FSMCï¿½ï¿½ï¿½ï¿½
 * Description    : Configures the Parallel interface (FSMC) for LCD(Parallel mode)
 * Input          : None
 * Output         : None
@@ -122,7 +122,7 @@ void LCD_FSMCConfig(void)
   FSMC_NORSRAMInitStructure.FSMC_WriteOperation = FSMC_WriteOperation_Enable;
   FSMC_NORSRAMInitStructure.FSMC_WaitSignal = FSMC_WaitSignal_Disable;
   FSMC_NORSRAMInitStructure.FSMC_ExtendedMode = FSMC_ExtendedMode_Disable;
-  FSMC_NORSRAMInitStructure.FSMC_AsyncWait = FSMC_AsyncWait_Disable;
+  FSMC_NORSRAMInitStructure.FSMC_AsynchronousWait = FSMC_AsynchronousWait_Disable;
   FSMC_NORSRAMInitStructure.FSMC_WriteBurst = FSMC_WriteBurst_Disable;
   FSMC_NORSRAMInitStructure.FSMC_ReadWriteTimingStruct = &p;
   FSMC_NORSRAMInitStructure.FSMC_WriteTimingStruct = &p;
@@ -136,7 +136,7 @@ void LCD_FSMCConfig(void)
 
 void LCD_X_Init(void)
 {
-  /*±³¹âÒý½Å³õÊ¼»¯*/
+  /*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ï¿½Ê¼ï¿½ï¿½*/
   LCD_LightPin();
 
  /* Configure the LCD Control pins --------------------------------------------*/
@@ -249,12 +249,12 @@ void Delay(u32 nCount)
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_Initializtion()
-* ¹¦    ÄÜ£º³õÊ¼»¯ LCD ¿ØÖÆÆ÷
-* Èë¿Ú²ÎÊý£ºÎÞ
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_Initializtion();
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_Initializtion()
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ LCD ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_Initializtion();
 ****************************************************************************/
 void ili9320_Initializtion()
 {
@@ -264,7 +264,7 @@ void ili9320_Initializtion()
     Delay(5); /* delay 50 ms */
     Delay(5); /* delay 50 ms */		
     DeviceCode = LCD_ReadReg(0x0000);
-    DeviceCode = 0x1505;		  //¶¨ÒåLCDÇý¶¯ÐÍºÅ   9325¡¢9328¡¢9320¡¢9300¡¢9331¡¢9919¡¢RU1505¡¢8989¡¢
+    DeviceCode = 0x1505;		  //ï¿½ï¿½ï¿½ï¿½LCDï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½   9325ï¿½ï¿½9328ï¿½ï¿½9320ï¿½ï¿½9300ï¿½ï¿½9331ï¿½ï¿½9919ï¿½ï¿½RU1505ï¿½ï¿½8989ï¿½ï¿½
 	if(DeviceCode==0x9325||DeviceCode==0x9328)
 	{
   		LCD_WriteReg(0x00e7,0x0010);      
@@ -560,23 +560,23 @@ void ili9320_Initializtion()
 	}							 
 	else if(DeviceCode==0x8989)
 	{
-		LCD_WriteReg(0x0000,0x0001);    ili9320_Delay(50000);   //´ò¿ª¾§Õñ
+		LCD_WriteReg(0x0000,0x0001);    ili9320_Delay(50000);   //ï¿½ò¿ª¾ï¿½ï¿½ï¿½
     	LCD_WriteReg(0x0003,0xA8A4);    ili9320_Delay(50000);   //0xA8A4
     	LCD_WriteReg(0x000C,0x0000);    ili9320_Delay(50000);   
     	LCD_WriteReg(0x000D,0x080C);    ili9320_Delay(50000);   
     	LCD_WriteReg(0x000E,0x2B00);    ili9320_Delay(50000);   
     	LCD_WriteReg(0x001E,0x00B0);    ili9320_Delay(50000);   
-    	LCD_WriteReg(0x0001,0x2B3F);    ili9320_Delay(50000);   //Çý¶¯Êä³ö¿ØÖÆ320*240  0x6B3F
+    	LCD_WriteReg(0x0001,0x2B3F);    ili9320_Delay(50000);   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½320*240  0x6B3F
     	LCD_WriteReg(0x0002,0x0600);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0010,0x0000);    ili9320_Delay(50000);
-    	LCD_WriteReg(0x0011,0x6070);    ili9320_Delay(50000);   //0x4030  //¶¨ÒåÊý¾Ý¸ñÊ½  16Î»É« ºáÆÁ 0x6058
+    	LCD_WriteReg(0x0011,0x6070);    ili9320_Delay(50000);   //0x4030  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¸ï¿½Ê½  16Î»É« ï¿½ï¿½ï¿½ï¿½ 0x6058
     	LCD_WriteReg(0x0005,0x0000);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0006,0x0000);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0016,0xEF1C);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0017,0x0003);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0007,0x0233);    ili9320_Delay(50000);   //0x0233       
     	LCD_WriteReg(0x000B,0x0000);    ili9320_Delay(50000);
-    	LCD_WriteReg(0x000F,0x0000);    ili9320_Delay(50000);   //É¨Ãè¿ªÊ¼µØÖ·
+    	LCD_WriteReg(0x000F,0x0000);    ili9320_Delay(50000);   //É¨ï¿½è¿ªÊ¼ï¿½ï¿½Ö·
     	LCD_WriteReg(0x0041,0x0000);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0042,0x0000);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0048,0x0000);    ili9320_Delay(50000);
@@ -599,50 +599,50 @@ void ili9320_Initializtion()
     	LCD_WriteReg(0x0023,0x0000);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0024,0x0000);    ili9320_Delay(50000);
     	LCD_WriteReg(0x0025,0x8000);    ili9320_Delay(50000);
-    	LCD_WriteReg(0x004f,0);        //ÐÐÊ×Ö·0
-    	LCD_WriteReg(0x004e,0);        //ÁÐÊ×Ö·0
+    	LCD_WriteReg(0x004f,0);        //ï¿½ï¿½ï¿½ï¿½Ö·0
+    	LCD_WriteReg(0x004e,0);        //ï¿½ï¿½ï¿½ï¿½Ö·0
 	}
     for(i=50000;i>0;i--);
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_SetCursor(u16 x,u16 y)
-* ¹¦    ÄÜ£ºÉèÖÃÆÁÄ»×ù±ê
-* Èë¿Ú²ÎÊý£ºx      ÐÐ×ù±ê
-*           y      ÁÐ×ù±ê
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_SetCursor(10,10);
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_SetCursor(u16 x,u16 y)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½x      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           y      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_SetCursor(10,10);
 ****************************************************************************/
 __inline void ili9320_SetCursor(u16 x,u16 y)
 {
 	if(DeviceCode==0x8989)
 	{
-	 	LCD_WriteReg(0x004e,y);        //ÐÐ
-    	LCD_WriteReg(0x004f,0x13f-x);  //ÁÐ
+	 	LCD_WriteReg(0x004e,y);        //ï¿½ï¿½
+    	LCD_WriteReg(0x004f,0x13f-x);  //ï¿½ï¿½
 	}
 	else if(DeviceCode==0x9919)
 	{
-		LCD_WriteReg(0x004e,x);        //ÐÐ
-  		LCD_WriteReg(0x004f,y);        //ÁÐ	
+		LCD_WriteReg(0x004e,x);        //ï¿½ï¿½
+  		LCD_WriteReg(0x004f,y);        //ï¿½ï¿½	
 	}
 	else
 	{
-  		LCD_WriteReg(0x0020,y);        //ÐÐ
-  		LCD_WriteReg(0x0021,0x13f-x);  //ÁÐ
+  		LCD_WriteReg(0x0020,y);        //ï¿½ï¿½
+  		LCD_WriteReg(0x0021,0x13f-x);  //ï¿½ï¿½
 	}
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
-* ¹¦    ÄÜ£ºÉèÖÃ´°¿ÚÇøÓò
-* Èë¿Ú²ÎÊý£ºStartX     ÐÐÆðÊ¼×ù±ê
-*           StartY     ÁÐÆðÊ¼×ù±ê
-*           EndX       ÐÐ½áÊø×ù±ê
-*           EndY       ÁÐ½áÊø×ù±ê
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_SetWindows(0,0,100,100)£»
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½StartX     ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+*           StartY     ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
+*           EndX       ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           EndY       ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_SetWindows(0,0,100,100)ï¿½ï¿½
 ****************************************************************************/
 __inline void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
 {
@@ -654,12 +654,12 @@ __inline void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_Clear(u16 dat)
-* ¹¦    ÄÜ£º½«ÆÁÄ»Ìî³ä³ÉÖ¸¶¨µÄÑÕÉ«£¬ÈçÇåÆÁ£¬ÔòÌî³ä 0xffff
-* Èë¿Ú²ÎÊý£ºdat      Ìî³äÖµ
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_Clear(0xffff);
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_Clear(u16 dat)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0xffff
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½dat      ï¿½ï¿½ï¿½Öµ
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_Clear(0xffff);
 ****************************************************************************/
 void ili9320_Clear(u16 Color)
 {
@@ -673,13 +673,13 @@ void ili9320_Clear(u16 Color)
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºu16 ili9320_GetPoint(u16 x,u16 y)
-* ¹¦    ÄÜ£º»ñÈ¡Ö¸¶¨×ù±êµÄÑÕÉ«Öµ
-* Èë¿Ú²ÎÊý£ºx      ÐÐ×ù±ê
-*           y      ÁÐ×ù±ê
-* ³ö¿Ú²ÎÊý£ºµ±Ç°×ù±êÑÕÉ«Öµ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºi=ili9320_GetPoint(10,10);
+* ï¿½ï¿½    ï¿½Æ£ï¿½u16 ili9320_GetPoint(u16 x,u16 y)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«Öµ
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½x      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           y      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«Öµ
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½i=ili9320_GetPoint(10,10);
 ****************************************************************************/
 u16 ili9320_GetPoint(u16 x,u16 y)
 {
@@ -687,14 +687,14 @@ u16 ili9320_GetPoint(u16 x,u16 y)
   return (ili9320_BGR2RGB(LCD_ReadRAM()));
 }
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_SetPoint(u16 x,u16 y,u16 point)
-* ¹¦    ÄÜ£ºÔÚÖ¸¶¨×ù±ê»­µã
-* Èë¿Ú²ÎÊý£ºx      ÐÐ×ù±ê
-*           y      ÁÐ×ù±ê
-*           point  µãµÄÑÕÉ«
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_SetPoint(10,10,0x0fe0);
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_SetPoint(u16 x,u16 y,u16 point)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ê»­ï¿½ï¿½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½x      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           y      ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           point  ï¿½ï¿½ï¿½ï¿½ï¿½É«
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_SetPoint(10,10,0x0fe0);
 ****************************************************************************/
 void ili9320_SetPoint(u16 x,u16 y,u16 point)
 {
@@ -706,15 +706,15 @@ void ili9320_SetPoint(u16 x,u16 y,u16 point)
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
-* ¹¦    ÄÜ£ºÔÚÖ¸¶¨×ù±êÏÔÊ¾Ò»¸ö8x16µãÕóµÄascii×Ö·û
-* Èë¿Ú²ÎÊý£ºx          ÐÐ×ù±ê
-*           y          ÁÐ×ù±ê
-*           charColor  ×Ö·ûµÄÑÕÉ«
-*           bkColor    ×Ö·û±³¾°ÑÕÉ«
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£ºÏÔÊ¾·¶Î§ÏÞ¶¨Îª¿ÉÏÔÊ¾µÄasciiÂë
-* µ÷ÓÃ·½·¨£ºili9320_PutChar(10,10,'a',0x0000,0xffff);
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Ò»ï¿½ï¿½8x16ï¿½ï¿½ï¿½ï¿½ï¿½asciiï¿½Ö·ï¿½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½x          ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           y          ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+*           charColor  ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½É«
+*           bkColor    ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Î§ï¿½Þ¶ï¿½Îªï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½asciiï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_PutChar(10,10,'a',0x0000,0xffff);
 ****************************************************************************/
 void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
 {
@@ -728,25 +728,25 @@ void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
     tmp_char=ascii_8x16[((c-0x20)*16)+i];
     for (j=0;j<8;j++)
     {
-      if ( (tmp_char >> 7-j) & 0x01 == 0x01)
+      if ( ((tmp_char >> (7-j)) & 0x01) == 0x01)
         {
-          ili9320_SetPoint(x+j,y+i,charColor); // ×Ö·ûÑÕÉ«
+          ili9320_SetPoint(x+j,y+i,charColor); // ï¿½Ö·ï¿½ï¿½ï¿½É«
         }
         else
         {
-          ili9320_SetPoint(x+j,y+i,bkColor); // ±³¾°ÑÕÉ«
+          ili9320_SetPoint(x+j,y+i,bkColor); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
         }
     }
   }
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºu16 ili9320_BGR2RGB(u16 c)
-* ¹¦    ÄÜ£ºRRRRRGGGGGGBBBBB ¸ÄÎª BBBBBGGGGGGRRRRR ¸ñÊ½
-* Èë¿Ú²ÎÊý£ºc      BRG ÑÕÉ«Öµ
-* ³ö¿Ú²ÎÊý£ºRGB ÑÕÉ«Öµ
-* Ëµ    Ã÷£ºÄÚ²¿º¯Êýµ÷ÓÃ
-* µ÷ÓÃ·½·¨£º
+* ï¿½ï¿½    ï¿½Æ£ï¿½u16 ili9320_BGR2RGB(u16 c)
+* ï¿½ï¿½    ï¿½Ü£ï¿½RRRRRGGGGGGBBBBB ï¿½ï¿½Îª BBBBBGGGGGGRRRRR ï¿½ï¿½Ê½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½c      BRG ï¿½ï¿½É«Öµ
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½RGB ï¿½ï¿½É«Öµ
+* Ëµ    ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½
 ****************************************************************************/
 u16 ili9320_BGR2RGB(u16 c)
 {
@@ -762,12 +762,12 @@ u16 ili9320_BGR2RGB(u16 c)
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_BackLight(u8 status)
-* ¹¦    ÄÜ£º¿ª¡¢¹ØÒº¾§±³¹â
-* Èë¿Ú²ÎÊý£ºstatus     1:±³¹â¿ª  0:±³¹â¹Ø
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_BackLight(1);
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_BackLight(u8 status)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½status     1:ï¿½ï¿½ï¿½â¿ª  0:ï¿½ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_BackLight(1);
 ****************************************************************************/
 void ili9320_BackLight(u8 status)
 {
@@ -782,12 +782,12 @@ void ili9320_BackLight(u8 status)
 }
 
 /****************************************************************************
-* Ãû    ³Æ£ºvoid ili9320_Delay(vu32 nCount)
-* ¹¦    ÄÜ£ºÑÓÊ±
-* Èë¿Ú²ÎÊý£ºnCount   ÑÓÊ±Öµ
-* ³ö¿Ú²ÎÊý£ºÎÞ
-* Ëµ    Ã÷£º
-* µ÷ÓÃ·½·¨£ºili9320_Delay(10000);
+* ï¿½ï¿½    ï¿½Æ£ï¿½void ili9320_Delay(vu32 nCount)
+* ï¿½ï¿½    ï¿½Ü£ï¿½ï¿½ï¿½Ê±
+* ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½nCount   ï¿½ï¿½Ê±Öµ
+* ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+* Ëµ    ï¿½ï¿½ï¿½ï¿½
+* ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ili9320_Delay(10000);
 ****************************************************************************/
 void ili9320_Delay(vu32 nCount)
 {

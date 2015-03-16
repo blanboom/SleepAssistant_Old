@@ -1,5 +1,9 @@
+#ifndef _TOUCH_SPI_H_
+#define _TOUCH_SPI_H
 
-u16 TPReadX(void);
-u16 TPReadY(void);
+u16 Screen_Touch_ReadX(void);
+u16 Screen_Touch_ReadY(void);
 
-void SPI_Config(void); 	
+void Screen_Touch_Init(void);
+
+#endif

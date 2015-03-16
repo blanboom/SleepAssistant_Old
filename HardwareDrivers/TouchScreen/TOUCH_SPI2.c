@@ -1,12 +1,10 @@
-#include "stm32f10x_lib.h"
+#include "stm32f10x_conf.h"
+#include "TOUCH_SPI2.h"
 
 #define TP_CS()  GPIO_ResetBits(GPIOB,GPIO_Pin_12)
 #define TP_DCS() GPIO_SetBits(GPIOB,GPIO_Pin_12)
 
-u16 TPReadX(void);
-u16 TPReadY(void);
-
-void SPI_Config(void) 	  //´¥ÃþÆÁSPI½Ó¿Ú
+void Screen_Touch_Init(void) 	  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½SPIï¿½Ó¿ï¿½
 { 
 		  GPIO_InitTypeDef  GPIO_InitStructure; 
 		  SPI_InitTypeDef   SPI_InitStructure; 
@@ -17,19 +15,19 @@ void SPI_Config(void) 	  //´¥ÃþÆÁSPI½Ó¿Ú
 		  //Configure SPI2 pins: SCK, MISO and MOSI 
 		  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13|GPIO_Pin_15; 
 		  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
-		  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;   //¸´ÓÃÍÆÍìÊä³ö
+		  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		  GPIO_Init(GPIOB,&GPIO_InitStructure);  
 		
 		  //Configure SPI2 pins: SCK, MISO and MOSI 
 		  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_14; 
 		  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
-		  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;   //¸´ÓÃÍÆÍìÊä³ö
+		  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;   //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		  GPIO_Init(GPIOB,&GPIO_InitStructure);  
 
 		  //Configure PB2 pin: TP_CS pin 
 		  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12; 
 		  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz; 
-		  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 	//ÍÆÍìÊä³ö
+		  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		  GPIO_Init(GPIOB,&GPIO_InitStructure); 
 
 		  // SPI2 Config
@@ -73,7 +71,7 @@ void SpiDelay(unsigned int DelayCnt)
 		for(i=0;i<DelayCnt;i++);
 }
 
-u16 TPReadX(void)
+u16 Screen_Touch_ReadX(void)
 { 
 	   u16 x=0;
 	   TP_CS();
@@ -89,7 +87,7 @@ u16 TPReadX(void)
 	   return (x);
 }
 
-u16 TPReadY(void)
+u16 Screen_Touch_ReadY(void)
 {
 	  u16 y=0;
 	  TP_CS();

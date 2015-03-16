@@ -1,4 +1,4 @@
-#include "stm32f10x_lib.h"
+#include "stm32f10x_conf.h"
 
 // 8x16 ASCII
 unsigned char const ascii_8x16[1536] = {
