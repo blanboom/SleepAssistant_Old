@@ -13,6 +13,7 @@ void GUI_Rectangle(u16 x0, u16 y0, u16 x1, u16 y1,u16 color,u8 fill);
 void GUI_Square(u16 x0, u16 y0, u16 with, u16 color,u8 fill);
 void GUI_Chinese_Text(u16 x,u16 y, char str[],u8 len,u16 charColor,u16 bkColor);
 void GUI_Word(u16  x, u16  y,u16  maxXS, u32  Da,  u16 Point, u16 Color, u16 bkColor);
+void GUI_DisplayBMP(unsigned short int, unsigned short int, char*);
 
 /* LCD color */
 #define White          0xFFFF
