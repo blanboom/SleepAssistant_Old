@@ -17,7 +17,7 @@ typedef struct
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /*******************************************************************************
-* Function Name  : LCD_CtrlLinesConfig	 ����IO����
+* Function Name  : LCD_CtrlLinesConfig	 引脚IO配置
 * Description    : Configures LCD Control lines (FSMC Pins) in alternate function
                    Push-Pull mode.
 * Input          : None
@@ -62,7 +62,7 @@ void LCD_CtrlLinesConfig(void)
 }
 
 /*******************************************************************************
-* Function Name  : //������ƽ�A1
+* Function Name  : //背光控制脚A1
 * Description    : 
 * Input          : None
 * Output         : None
@@ -80,7 +80,7 @@ void LCD_LightPin(void)
   GPIO_SetBits(GPIOA, GPIO_Pin_1);
 }
 /*******************************************************************************
-* Function Name  : LCD_FSMCConfig	  FSMC����
+* Function Name  : LCD_FSMCConfig	  FSMC配置
 * Description    : Configures the Parallel interface (FSMC) for LCD(Parallel mode)
 * Input          : None
 * Output         : None
@@ -136,7 +136,7 @@ void LCD_FSMCConfig(void)
 
 void LCD_X_Init(void)
 {
-  /*�������ų�ʼ��*/
+	/*背光引脚初始化*/
   LCD_LightPin();
 
  /* Configure the LCD Control pins --------------------------------------------*/
@@ -249,12 +249,12 @@ void Delay(u32 nCount)
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_Initializtion()
-* ��    �ܣ���ʼ�� LCD ������
-* ��ڲ�������
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_Initializtion();
+* 名    称：void ili9320_Initializtion()
+* 功    能：初始化 LCD 控制器
+* 入口参数：无
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_Initializtion();
 ****************************************************************************/
 void ili9320_Initializtion()
 {
@@ -606,13 +606,13 @@ void ili9320_Initializtion()
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_SetCursor(u16 x,u16 y)
-* ��    �ܣ�������Ļ����
-* ��ڲ�����x      ������
-*           y      ������
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_SetCursor(10,10);
+* 名    称：void ili9320_SetCursor(u16 x,u16 y)
+* 功    能：设置屏幕座标
+* 入口参数：x      行座标
+*           y      列座标
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_SetCursor(10,10);
 ****************************************************************************/
 __inline void ili9320_SetCursor(u16 x,u16 y)
 {
@@ -634,15 +634,15 @@ __inline void ili9320_SetCursor(u16 x,u16 y)
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
-* ��    �ܣ����ô�������
-* ��ڲ�����StartX     ����ʼ����
-*           StartY     ����ʼ����
-*           EndX       �н�������
-*           EndY       �н�������
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_SetWindows(0,0,100,100)��
+* 名    称：void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
+* 功    能：设置窗口区域
+* 入口参数：StartX     行起始座标
+*           StartY     列起始座标
+*           EndX       行结束座标
+*           EndY       列结束座标
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_SetWindows(0,0,100,100)；
 ****************************************************************************/
 __inline void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
 {
@@ -654,12 +654,12 @@ __inline void ili9320_SetWindows(u16 StartX,u16 StartY,u16 EndX,u16 EndY)
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_Clear(u16 dat)
-* ��    �ܣ�����Ļ����ָ������ɫ��������������� 0xffff
-* ��ڲ�����dat      ���ֵ
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_Clear(0xffff);
+* 名    称：void ili9320_Clear(u16 dat)
+* 功    能：将屏幕填充成指定的颜色，如清屏，则填充 0xffff
+* 入口参数：dat      填充值
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_Clear(0xffff);
 ****************************************************************************/
 void ili9320_Clear(u16 Color)
 {
@@ -673,13 +673,13 @@ void ili9320_Clear(u16 Color)
 }
 
 /****************************************************************************
-* ��    �ƣ�u16 ili9320_GetPoint(u16 x,u16 y)
-* ��    �ܣ���ȡָ���������ɫֵ
-* ��ڲ�����x      ������
-*           y      ������
-* ���ڲ�������ǰ������ɫֵ
-* ˵    ����
-* ���÷�����i=ili9320_GetPoint(10,10);
+* 名    称：u16 ili9320_GetPoint(u16 x,u16 y)
+* 功    能：获取指定座标的颜色值
+* 入口参数：x      行座标
+*           y      列座标
+* 出口参数：当前座标颜色值
+* 说    明：
+* 调用方法：i=ili9320_GetPoint(10,10);
 ****************************************************************************/
 u16 ili9320_GetPoint(u16 x,u16 y)
 {
@@ -687,14 +687,14 @@ u16 ili9320_GetPoint(u16 x,u16 y)
   return (ili9320_BGR2RGB(LCD_ReadRAM()));
 }
 /****************************************************************************
-* ��    �ƣ�void ili9320_SetPoint(u16 x,u16 y,u16 point)
-* ��    �ܣ���ָ�����껭��
-* ��ڲ�����x      ������
-*           y      ������
-*           point  �����ɫ
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_SetPoint(10,10,0x0fe0);
+* 名    称：void ili9320_SetPoint(u16 x,u16 y,u16 point)
+* 功    能：在指定座标画点
+* 入口参数：x      行座标
+*           y      列座标
+*           point  点的颜色
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_SetPoint(10,10,0x0fe0);
 ****************************************************************************/
 void ili9320_SetPoint(u16 x,u16 y,u16 point)
 {
@@ -706,15 +706,15 @@ void ili9320_SetPoint(u16 x,u16 y,u16 point)
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
-* ��    �ܣ���ָ��������ʾһ��8x16�����ascii�ַ�
-* ��ڲ�����x          ������
-*           y          ������
-*           charColor  �ַ�����ɫ
-*           bkColor    �ַ�������ɫ
-* ���ڲ�������
-* ˵    ������ʾ��Χ�޶�Ϊ����ʾ��ascii��
-* ���÷�����ili9320_PutChar(10,10,'a',0x0000,0xffff);
+* 名    称：void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
+* 功    能：在指定座标显示一个8x16点阵的ascii字符
+* 入口参数：x          行座标
+*           y          列座标
+*           charColor  字符的颜色
+*           bkColor    字符背景颜色
+* 出口参数：无
+* 说    明：显示范围限定为可显示的ascii码
+* 调用方法：ili9320_PutChar(10,10,'a',0x0000,0xffff);
 ****************************************************************************/
 void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
 {
@@ -741,12 +741,12 @@ void ili9320_PutChar(u16 x,u16 y,u8 c,u16 charColor,u16 bkColor)
 }
 
 /****************************************************************************
-* ��    �ƣ�u16 ili9320_BGR2RGB(u16 c)
-* ��    �ܣ�RRRRRGGGGGGBBBBB ��Ϊ BBBBBGGGGGGRRRRR ��ʽ
-* ��ڲ�����c      BRG ��ɫֵ
-* ���ڲ�����RGB ��ɫֵ
-* ˵    �����ڲ���������
-* ���÷�����
+* 名    称：u16 ili9320_BGR2RGB(u16 c)
+* 功    能：RRRRRGGGGGGBBBBB 改为 BBBBBGGGGGGRRRRR 格式
+* 入口参数：c      BRG 颜色值
+* 出口参数：RGB 颜色值
+* 说    明：内部函数调用
+* 调用方法：
 ****************************************************************************/
 u16 ili9320_BGR2RGB(u16 c)
 {
@@ -762,12 +762,12 @@ u16 ili9320_BGR2RGB(u16 c)
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_BackLight(u8 status)
-* ��    �ܣ�������Һ������
-* ��ڲ�����status     1:���⿪  0:�����
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_BackLight(1);
+* 名    称：void ili9320_BackLight(u8 status)
+* 功    能：开、关液晶背光
+* 入口参数：status     1:背光开  0:背光关
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_BackLight(1);
 ****************************************************************************/
 void ili9320_BackLight(u8 status)
 {
@@ -782,12 +782,12 @@ void ili9320_BackLight(u8 status)
 }
 
 /****************************************************************************
-* ��    �ƣ�void ili9320_Delay(vu32 nCount)
-* ��    �ܣ���ʱ
-* ��ڲ�����nCount   ��ʱֵ
-* ���ڲ�������
-* ˵    ����
-* ���÷�����ili9320_Delay(10000);
+* 名    称：void ili9320_Delay(vu32 nCount)
+* 功    能：延时
+* 入口参数：nCount   延时值
+* 出口参数：无
+* 说    明：
+* 调用方法：ili9320_Delay(10000);
 ****************************************************************************/
 void ili9320_Delay(vu32 nCount)
 {

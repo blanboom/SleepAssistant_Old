@@ -133,5 +133,10 @@ u16 ili9320_BGR2RGB(u16 c);
 
 u16 ili9320_GetPoint(u16 x,u16 y);;
 
+void LCD_WriteRAM_Prepare(void);
+void LCD_WriteRAM(u16);
+void ili9320_Delay(vu32 nCount);
+
+
 
 #endif
