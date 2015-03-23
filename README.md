@@ -17,3 +17,15 @@
 通过无线功能与其他设备相连接。例如可以连接手环等，整合运动数据，研究运动对睡眠质量的影响；或者连接可联网控制的灯泡，夜里需要起床时自动开灯，早上通过灯光将人唤醒；或者连接电热水瓶等，起床后自动烧水。
 
 暂时打算用 STM32 + MPU6050 实现。作品尚未完成，如果有问题或建议请与我联系。
+
+图标素材来源：
+
+- [http://www.freepik.com/free-vector/businessman-falls-asleep-at-his-desk_766634.htm](http://www.freepik.com/free-vector/businessman-falls-asleep-at-his-desk_766634.htm)
+- http://www.flaticon.com/free-icon/information-button_8201
+- http://www.flaticon.com/free-icon/music-notes_67936
+- http://www.flaticon.com/free-icon/wifi-signal_61692
+- http://www.flaticon.com/free-icon/three-oclock-alarm_254
+- http://www.flaticon.com/free-icon/heart-with-lifeline_55194
+- http://www.flaticon.com/free-icon/electrocardiogram-inside-heart_62453
+- http://www.flaticon.com/free-icon/bars-graphic_33544
+- http://www.flaticon.com/free-icon/musical-note_66869
