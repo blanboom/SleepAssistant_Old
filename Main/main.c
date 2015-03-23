@@ -2,7 +2,8 @@
  * 一个多功能的睡眠辅助设备，包含闹钟、睡眠提醒、睡眠质量统计等
  */
 
-#include <gui_basic.h>
+#include "ff.h"
+#include "diskio.h"
 #include <stdio.h>
 #include "diag/Trace.h"
 #include "Motion.h"
@@ -13,6 +14,9 @@
 #include "USART1.h"
 #include "App_Alarm.h"
 #include "gui_touch.h"
+#include "ili9320.h"
+#include "gui_basic.h"
+#include "gui_main.h"
 
 
 #pragma GCC diagnostic push
@@ -22,6 +26,8 @@
 
 int main(int argc, char* argv[])
 {
+	FATFS filesystem;
+
 	trace_printf("System clock: %uHz\n", SystemCoreClock);
 	interruptNVICInit();  // NVIC 初始化
 	timeInit();           // RTC 及时间初始化
@@ -31,19 +37,22 @@ int main(int argc, char* argv[])
 	USART1_Init();
 	touchInit();
 	GUI_Init();
+	f_mount(0, &filesystem);
 
 
 	//getZeroMotionValue();  // 可在以后启动时增加校准程序
 	trace_printf(asctime(&currentTime)); // 现在时间
-	GUI_Chinese_Text(85,60,"\xc3\xab",2,Red,White);
-	GUI_Chinese_Text(85,90,"\xba\xc3",2,Blue,White);
-	GUI_Text(85,120,"X: ",3,Blue,White);
-	GUI_Text(85,150,"Y: ",3,Blue,White);
+
+	GUI_Main_StartScreen();
+	delay(2000);
+	GUI_Main_NoteScreen();
+	delay(7000);
+	GUI_Main_MainScreen();
 
 	while (1)
 	{
-		GUI_Word(150,120,5,getTouchX(),0,White,Red);
-		GUI_Word(150,150,5,getTouchY(),0,White,Red);
+		//GUI_Word(150,120,5,getTouchX(),0,White,Red);
+		//GUI_Word(150,150,5,getTouchY(),0,White,Red);
 		//alarmApp();
         //trace_printf("%d\n", detectMove());  // 身体移动
 		//delay(400);
