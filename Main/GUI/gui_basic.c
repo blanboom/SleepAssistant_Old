@@ -462,10 +462,9 @@ void  GUI_Square(u16 x0, u16 y0, u16 with, u16 color,u8 fill)
  * @retval None
  */
 void GUI_DisplayBMP(unsigned short int Xpos, unsigned short int Ypos,
-		char* pic_name)
-{
+		char* pic_name) {
 	uint32_t size = 0, offset = 0;
-	uint32_t width = 0, height = 0;
+	uint32_t width = 0, height = 0, l_width;
 	uint32_t compression, clrUsed;
 	//uint16_t type
 	uint16_t bitCount;
@@ -504,32 +503,93 @@ void GUI_DisplayBMP(unsigned short int Xpos, unsigned short int Ypos,
 	clrUsed |= *(uint16_t *) (BmpAddress + 48) << 16;
 
 	size = (size - offset) / 2;
+	l_width = (((width * bitCount)+31)/32*4);
 	f_read(&F, Buffer, offset - 54, &BytesRead);
-	switch (bitCount)
-	{
+	switch (bitCount) {
 	case 1:
 	case 4:
 	case 8:
 		break;
 	case 16:
 		//for (y = height - 1; (y < height) && (y >= 0); y -= 1)
-		for (y = height - 1; y < height; y -= 1)
-		{
-			if (width * 2 > 512)
-			{
-				f_read(&F, Buffer, width, &BytesRead);
-				f_read(&F, Buffer + width, width, &BytesRead);
-			}
-			else
-			{
-				f_read(&F, Buffer, width * 2, &BytesRead);
-			}
-			for (x = 0; x < width; x++)
-			{
+		for (y = height - 1; y < height; y -= 1) {
+			f_read(&F, Buffer, l_width, &BytesRead);
+			for (x = 0; x < width; x++) {
 				Color = *(uint16_t*) (Buffer + 2 * x);
 				ili9320_SetCursor(Xpos + x, Ypos + y);
 				LCD_WriteRAM_Prepare(); /* Prepare to write GRAM */
 				LCD_WriteRAM(Color);
+				//trace_printf("%x\n", Color);
+			}
+		}
+		f_close(&F);
+		break;
+	case 24:
+	case 32:
+		break;
+	}
+}
+
+void GUI_DisplayBMP_SkipBackground(unsigned short int Xpos, unsigned short int Ypos,
+		char* pic_name, uint16_t backgroundColor) {
+	uint32_t size = 0, offset = 0;
+	uint32_t width = 0, height = 0, l_width;
+	uint32_t compression, clrUsed;
+	//uint16_t type
+	uint16_t bitCount;
+	uint32_t BmpAddress;
+	uint32_t x, y;
+	uint32_t Color;
+	//uint32_t BkColor, MixColor;
+	FIL F;
+	unsigned char tmp_name[20];
+
+	sprintf((char*) tmp_name, "0:%s", pic_name);
+	f_open(&F, (char *) tmp_name, FA_READ);
+	f_read(&F, Buffer, 54, &BytesRead);
+	BmpAddress = (uint32_t) Buffer;
+
+//	type = *(uint16_t *) (BmpAddress);
+	/* Read bitmap size */
+	size = *(uint16_t *) (BmpAddress + 2);
+	size |= (*(uint16_t *) (BmpAddress + 4)) << 16;
+	/* Get bitmap data address offset */
+	offset = *(uint16_t *) (BmpAddress + 10);
+	offset |= (*(uint16_t *) (BmpAddress + 12)) << 16;
+	/* Read bitmap width */
+	width = *(uint16_t *) (BmpAddress + 18);
+	width |= (*(uint16_t *) (BmpAddress + 20)) << 16;
+	/* Read bitmap height */
+	height = *(uint16_t *) (BmpAddress + 22);
+	height |= (*(uint16_t *) (BmpAddress + 24)) << 16;
+
+	bitCount = *(uint16_t *) (BmpAddress + 28);
+
+	compression = *(uint16_t *) (BmpAddress + 30);
+	compression |= *(uint16_t *) (BmpAddress + 32) << 16;
+
+	clrUsed = *(uint16_t *) (BmpAddress + 46);
+	clrUsed |= *(uint16_t *) (BmpAddress + 48) << 16;
+
+	size = (size - offset) / 2;
+	l_width = (((width * bitCount)+31)/32*4);
+	f_read(&F, Buffer, offset - 54, &BytesRead);
+	switch (bitCount) {
+	case 1:
+	case 4:
+	case 8:
+		break;
+	case 16:
+		//for (y = height - 1; (y < height) && (y >= 0); y -= 1)
+		for (y = height - 1; y < height; y -= 1) {
+            f_read(&F, Buffer, l_width, &BytesRead);
+			for (x = 0; x < width; x++) {
+				Color = *(uint16_t*) (Buffer + 2 * x);
+				if (Color != backgroundColor) {
+					ili9320_SetCursor(Xpos + x, Ypos + y);
+					LCD_WriteRAM_Prepare(); /* Prepare to write GRAM */
+					LCD_WriteRAM(Color);
+				}
 			}
 		}
 		f_close(&F);
