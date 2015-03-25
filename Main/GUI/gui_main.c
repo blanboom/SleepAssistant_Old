@@ -40,7 +40,7 @@ void GUI_Main_MainScreen(void) {
 
 void GUI_Main_F1_NoteScreen(void) {
 	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f1/note_f1.bmp");
+	GUI_DisplayBMP(0, 0, "/GUI/f1/nf1.bmp");
 }
 
 void GUI_Main_F1_MainScreen(void) {
@@ -50,7 +50,7 @@ void GUI_Main_F1_MainScreen(void) {
 
 void GUI_Main_F2_MainScreen(void) {
 	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/fw/f2.bmp");
+	GUI_DisplayBMP(0, 0, "/GUI/f2/f2.bmp");
 }
 
 void GUI_Main_F3_MainScreen(void) {
