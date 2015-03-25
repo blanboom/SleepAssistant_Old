@@ -29,3 +29,4 @@
 - http://www.flaticon.com/free-icon/electrocardiogram-inside-heart_62453
 - http://www.flaticon.com/free-icon/bars-graphic_33544
 - http://www.flaticon.com/free-icon/musical-note_66869
+- http://www.flaticon.com/free-icon/analysis-of-business-statistics-in-a-line-graphic-with-points_40160

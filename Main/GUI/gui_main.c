@@ -38,4 +38,39 @@ void GUI_Main_MainScreen(void) {
 	GUI_DisplayBMP(214, 123, "/GUI/main6.bmp");
 }
 
+void GUI_Main_F1_NoteScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/f1/note_f1.bmp");
+}
+
+void GUI_Main_F1_MainScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/f1/f1.bmp");
+}
+
+void GUI_Main_F2_MainScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/fw/f2.bmp");
+}
+
+void GUI_Main_F3_MainScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/f3/f3.bmp");
+}
+
+void GUI_Main_F4_MainScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/f4/f4.bmp");
+}
+
+void GUI_Main_F5_MainScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/f5/f5.bmp");
+}
+
+void GUI_Main_F6_MainScreen(void) {
+	ili9320_Clear(White);
+	GUI_DisplayBMP(0, 0, "/GUI/f6/f6.bmp");
+}
+
 #endif /* GUI_GUI_MAIN_C_ */

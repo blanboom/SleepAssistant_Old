@@ -44,10 +44,24 @@ int main(int argc, char* argv[])
 	trace_printf(asctime(&currentTime)); // 现在时间
 
 	GUI_Main_StartScreen();
-	delay(2000);
+	delay(1000);
 	GUI_Main_NoteScreen();
-	delay(7000);
+	delay(1000);
 	GUI_Main_MainScreen();
+	delay(1000);
+	GUI_Main_F1_NoteScreen();
+	delay(1000);
+	GUI_Main_F1_MainScreen();
+	delay(1000);
+	GUI_Main_F2_MainScreen();
+	delay(1000);
+	GUI_Main_F3_MainScreen();
+	delay(1000);
+	GUI_Main_F4_MainScreen();
+	delay(1000);
+	GUI_Main_F5_MainScreen();
+	delay(1000);
+	GUI_Main_F6_MainScreen();
 
 	while (1)
 	{
