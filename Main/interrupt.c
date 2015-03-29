@@ -7,6 +7,7 @@
 #include "TimeAlarm.h"
 #include "SysTick.h"
 #include "USART1.h"
+#include "ili9320.h"
 
 /** void interruptNVICInit(void) - 中断初始化程序
  * 初始化 NVIC，设置中断优先级
@@ -25,6 +26,12 @@ void interruptNVICInit(void)
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
 	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
+	// 设置 EXTI9_5 中断优先级（触摸屏的触摸中断）
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn ;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
 }
@@ -47,4 +54,9 @@ void SysTick_Handler(void)
 void USART1_IRQHandler(void)
 {
 	USART1_ISR();
+}
+
+void EXTI9_5_IRQHandler(void)
+{
+	XPT2046_ISR();
 }

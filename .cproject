@@ -181,7 +181,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="SDID_SDCard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="HardwareDrivers"/>
+						<entry excluding="TouchScreen/TOUCH_SPI2.h|TouchScreen/TOUCH_SPI2.c|SDID_SDCard" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="HardwareDrivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Main"/>
 						<entry excluding="Main/stm32f1-stdperiph/stm32f10x_rtc.c|Main/stm32f1-stdperiph/stm32f10x_wwdg.c|Main/stm32f1-stdperiph/stm32f10x_tim.c|Main/stm32f1-stdperiph/stm32f10x_dma.c|Main/stm32f1-stdperiph/stm32f10x_bkp.c|Main/stm32f1-stdperiph/stm32f10x_crc.c|Main/stm32f1-stdperiph/stm32f10x_can.c|Main/stm32f1-stdperiph/stm32f10x_dac.c|Main/stm32f1-stdperiph/stm32f10x_pwr.c|Main/stm32f1-stdperiph/stm32f10x_spi.c|Main/stm32f1-stdperiph/stm32f10x_exti.c|Main/stm32f1-stdperiph/stm32f10x_sdio.c|Main/stm32f1-stdperiph/stm32f10x_cec.c|Main/stm32f1-stdperiph/stm32f10x_dbgmcu.c|Main/stm32f1-stdperiph/stm32f10x_adc.c|Main/stm32f1-stdperiph/stm32f10x_i2c.c|Main/stm32f1-stdperiph/stm32f10x_iwdg.c|Main/stm32f1-stdperiph/stm32f10x_flash.c|Main/stm32f1-stdperiph/stm32f10x_usart.c|Main/stm32f1-stdperiph/stm32f10x_fsmc.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="System"/>
 					</sourceEntries>

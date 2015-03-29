@@ -29,6 +29,7 @@ void GUI_DisplayBMP_SkipBackground(unsigned short int, unsigned short int,
 #define Cyan           0x7FFF
 #define Yellow         0xFFE0
 
+
 #define Line0          0
 #define Line1          24
 #define Line2          48

@@ -35,36 +35,39 @@ int main(int argc, char* argv[])
 	systickInit();        // SysTick 初始化
 	//mp3Init();
 	USART1_Init();
-	touchInit();
 	GUI_Init();
+	GUI_Touch_Init();
 	f_mount(0, &filesystem);
 
 
 	//getZeroMotionValue();  // 可在以后启动时增加校准程序
 	trace_printf(asctime(&currentTime)); // 现在时间
 
-	GUI_Main_StartScreen();
-	delay(1000);
-	GUI_Main_NoteScreen();
-	delay(1000);
-	GUI_Main_MainScreen();
-	delay(1000);
-	GUI_Main_F1_NoteScreen();
-	delay(1000);
-	GUI_Main_F1_MainScreen();
-	delay(1000);
-	GUI_Main_F2_MainScreen();
-	delay(1000);
-	GUI_Main_F3_MainScreen();
-	delay(1000);
-	GUI_Main_F4_MainScreen();
-	delay(1000);
-	GUI_Main_F5_MainScreen();
-	delay(1000);
-	GUI_Main_F6_MainScreen();
+	while(GUI_Touch_Calibrate() != 0);
 
 	while (1)
 	{
+		GUI_Main_StartScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_NoteScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F1_NoteScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F1_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F2_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F3_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F4_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F5_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+		GUI_Main_F6_MainScreen();
+		while (GUI_Touch_Read_2046() == 0);
+
 		//GUI_Word(150,120,5,getTouchX(),0,White,Red);
 		//GUI_Word(150,150,5,getTouchY(),0,White,Red);
 		//alarmApp();
