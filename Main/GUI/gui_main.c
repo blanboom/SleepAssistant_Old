@@ -29,12 +29,16 @@ void GUI_Main_DrawGraph_Prepare(uint8_t x, uint8_t y, uint8_t width, uint8_t hei
 }
 
 void GUI_Main_DrawGraph(uint8_t data, uint16_t color) {
-	ili9320_SetPoint(graphNowX, graphY+data, color);
-	graphNowX++;
+	static previousData;
+	GUI_Line(graphNowX+2, graphY, graphNowX+2, graphY+graphHeight, graphBG);
+	GUI_Line(graphNowX+3, graphY, graphNowX+3, graphY+graphHeight, graphBG);
+	GUI_Line(graphNowX+4, graphY, graphNowX+4, graphY+graphHeight, graphBG);
+	GUI_Line(graphNowX, graphY+previousData, graphNowX+1, graphY+data, color);
 	if(graphNowX >= graphRight) {
 		graphNowX = graphX;
-		GUI_Rectangle(graphX, graphY - graphHeight, graphX + graphWidth, graphY, graphBG, graphBG);
 	}
+	previousData = data;
+	graphNowX++;
 }
 
 void GUI_Main_StartScreen(void) {
