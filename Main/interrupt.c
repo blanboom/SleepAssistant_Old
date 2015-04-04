@@ -7,7 +7,7 @@
 #include "TimeAlarm.h"
 #include "SysTick.h"
 #include "USART1.h"
-#include "ili9320.h"
+#include "XPT2046.h"
 
 /** void interruptNVICInit(void) - 中断初始化程序
  * 初始化 NVIC，设置中断优先级

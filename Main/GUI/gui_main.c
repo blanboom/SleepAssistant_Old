@@ -8,9 +8,34 @@
 #include "gui_basic.h"
 #include "ili9320.h"
 #include "SysTick.h"
+#include "gui_main.h"
 
 #ifndef GUI_GUI_MAIN_C_
 #define GUI_GUI_MAIN_C_
+
+uint8_t graphX, graphY, graphWidth, graphHeight, graphRight, graphNowX;
+uint16_t graphBG;
+
+// x, y 为图标左下角坐标
+void GUI_Main_DrawGraph_Prepare(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint16_t background) {
+	graphX      = x;
+	graphY      = y;
+	graphNowX   = x;
+	graphRight  = x + width;
+	graphWidth  = width;
+	graphHeight = height;
+	graphBG     = background;
+	GUI_Rectangle(x, y - height, x + width, y, background, background);
+}
+
+void GUI_Main_DrawGraph(uint8_t data, uint16_t color) {
+	ili9320_SetPoint(graphNowX, graphY+data, color);
+	graphNowX++;
+	if(graphNowX >= graphRight) {
+		graphNowX = graphX;
+		GUI_Rectangle(graphX, graphY - graphHeight, graphX + graphWidth, graphY, graphBG, graphBG);
+	}
+}
 
 void GUI_Main_StartScreen(void) {
 	ili9320_Clear(0xc73c);
