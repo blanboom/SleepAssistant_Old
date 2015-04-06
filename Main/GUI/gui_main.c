@@ -16,7 +16,7 @@
 uint8_t graphX, graphY, graphWidth, graphHeight, graphRight, graphNowX;
 uint16_t graphBG;
 
-// x, y 为图标左下角坐标
+// x, y 为图标左上角坐标
 void GUI_Main_DrawGraph_Prepare(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint16_t background) {
 	graphX      = x;
 	graphY      = y;
@@ -25,17 +25,21 @@ void GUI_Main_DrawGraph_Prepare(uint8_t x, uint8_t y, uint8_t width, uint8_t hei
 	graphWidth  = width;
 	graphHeight = height;
 	graphBG     = background;
-	GUI_Rectangle(x, y - height, x + width, y, background, background);
+	GUI_Rectangle(x, y, x + width, y + height, background, background);
 }
 
 void GUI_Main_DrawGraph(uint8_t data, uint16_t color) {
-	static previousData;
+	static int previousData;
+	data = graphHeight - data;
 	GUI_Line(graphNowX+2, graphY, graphNowX+2, graphY+graphHeight, graphBG);
 	GUI_Line(graphNowX+3, graphY, graphNowX+3, graphY+graphHeight, graphBG);
 	GUI_Line(graphNowX+4, graphY, graphNowX+4, graphY+graphHeight, graphBG);
 	GUI_Line(graphNowX, graphY+previousData, graphNowX+1, graphY+data, color);
 	if(graphNowX >= graphRight) {
 		graphNowX = graphX;
+		GUI_Line(graphNowX+0, graphY, graphNowX+0, graphY+graphHeight, graphBG);
+		GUI_Line(graphNowX+1, graphY, graphNowX+1, graphY+graphHeight, graphBG);
+		GUI_Line(graphNowX+2, graphY, graphNowX+2, graphY+graphHeight, graphBG);
 	}
 	previousData = data;
 	graphNowX++;
@@ -67,15 +71,7 @@ void GUI_Main_MainScreen(void) {
 	GUI_DisplayBMP(214, 123, "/GUI/main6.bmp");
 }
 
-void GUI_Main_F1_NoteScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f1/nf1.bmp");
-}
 
-void GUI_Main_F1_MainScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f1/f1.bmp");
-}
 
 void GUI_Main_F2_MainScreen(void) {
 	ili9320_Clear(White);
