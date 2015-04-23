@@ -12,7 +12,8 @@
 
 #define BLOCK_SIZE            512 /* Block Size in Bytes */
 
-
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 
 /*-----------------------------------------------------------------------*/
 /* Inidialize a Drive                                                    */
@@ -149,3 +150,5 @@ DWORD get_fattime(void)
  	return 0;
 
 } 
+
+#pragma GCC diagnostic pop
