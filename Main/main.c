@@ -35,7 +35,6 @@ int main(int argc, char* argv[])
 	systickInit();        // SysTick 初始化
 	GUI_Init();
 	GUI_Touch_Init();
-	motionInit();         // 动作感应（MPU6050 等）初始化
 	//mp3Init();
 	USART1_Init();
 
@@ -53,8 +52,9 @@ int main(int argc, char* argv[])
 //	GUI_Main_MainScreen();
 //	while (GUI_Touch_Read_2046() == 0);
 	showMainScreen();
+	motionInit();         // 动作感应（MPU6050 等）初始化
 
-	while (1)
+	for(;;)
 	{
 		sleepTrack();
 
