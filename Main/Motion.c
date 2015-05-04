@@ -15,7 +15,7 @@
  * 越小越灵敏
  * 在此处使用变量而不使用宏定义，是为了以后可以添加自动灵敏度校准程序
  */
-uint16_t moveSensitivity = 370;
+uint16_t moveSensitivity = 230;
 
 /** 睡眠质量统计的所需的变量
  * 在一个时间段内，若判断到睡眠质量较好，则 sleepWellStat 加一
@@ -181,7 +181,7 @@ bool detectMove(void)
 	}
 
 	ret = sqrt(ret);
-	//trace_printf("%d\n",ret);
+	// trace_printf("%d\n",ret);
 
 	// 判断三个角速度的平方和的大小，如果比设定的灵敏度大，就返回 1
 	if(ret > moveSensitivity)
