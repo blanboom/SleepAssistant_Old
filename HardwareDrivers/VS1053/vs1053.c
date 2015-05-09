@@ -46,18 +46,18 @@ void VS1053_SPI_Init(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
-	/* PC1-RST(复位) */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	/* PF6-RST(复位) */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+	GPIO_Init(GPIOF, &GPIO_InitStructure);
 
-	/* PC2-XDCS(数据命令选择) */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	/* PF4-XDCS(数据命令选择) */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4;
+	GPIO_Init(GPIOF, &GPIO_InitStructure);
 
-	/* PC3-DREQ(数据中断) */
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+	/* PF8-DREQ(数据中断) */
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;  /* 上拉输入 */
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	GPIO_Init(GPIOF, &GPIO_InitStructure);
 
 	/* SPI1 configuration */
 	SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
@@ -164,9 +164,13 @@ void VS1053_MP3_Start(void)
 	VS1053_WriteRegister(3, 0x98, 0x00);   		    // 设置vs1003的时钟,3倍频
 	VS1053_WriteRegister(5, 0xBB, 0x81);   		    // 采样率48k，立体声
 	VS1053_WriteRegister(SPI_BASS, TrebleEnhanceValue, BassEnhanceValue);// 设置重低音
-	VS1053_WriteRegister(0x0b,0x30,0x00);      	                         // VS1003 音量
+	VS1053_WriteRegister(0x0b,0x30,0x30);      	                         // VS1003 音量
 	delay(1);
 
 	while( DREQ == 0 );						   	        // 等待DREQ为高  表示能够接受音乐数据输入
+}
 
+void VS1053_Init(void) {
+	VS1053_SPI_Init();
+	VS1053_MP3_Start();
 }

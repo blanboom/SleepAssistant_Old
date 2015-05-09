@@ -36,14 +36,14 @@
 #define TCS   (1<<4)  // PA4-XCS
 #define TCS_SET(x)  GPIOA->ODR=(GPIOA->ODR&~TCS)|(x ? TCS:0)
 
-#define RST   (1<<1)  // PC1-RST
-#define TRST_SET(x)  GPIOC->ODR=(GPIOC->ODR&~RST)|(x ? RST:0)
+#define RST   (1<<6)  // PF6-RST
+#define TRST_SET(x)  GPIOF->ODR=(GPIOF->ODR&~RST)|(x ? RST:0)
 
-#define XDCS   (1<<2)  // PC2-XDCS
-#define TXDCS_SET(x)  GPIOC->ODR=(GPIOC->ODR&~XDCS)|(x ? XDCS:0)
+#define XDCS   (1<<4)  // PF4-XDCS
+#define TXDCS_SET(x)  GPIOC->ODR=(GPIOF->ODR&~XDCS)|(x ? XDCS:0)
 
-											 // PC3-DREQ
-#define DREQ  GPIO_ReadInputDataBit(GPIOC,GPIO_Pin_3)
+											 // PF8-DREQ
+#define DREQ  GPIO_ReadInputDataBit(GPIOF,GPIO_Pin_8)
 
 
 /* VS1003(音频解码芯片) 命令宏定义 */
@@ -91,11 +91,10 @@
 #define MP3CMD_TestVS1003			0x16
 
 
-void VS1053_SPI_Init(void);
+void VS1053_Init(void);
 u8 VS1053_WriteByte( u8 byte );
 u8 VS1053_ReadByte(void);
 void VS1053_WriteRegister(u8 addressbyte, u8 highbyte, u8 lowbyte);
 u16 VS1053_ReadRegister(u8 addressbyte);
-void VS1053_MP3_Start(void);
 
 #endif /* __VS1003_H */
