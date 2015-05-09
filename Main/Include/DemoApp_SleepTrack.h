@@ -8,7 +8,6 @@
 #ifndef DEMOAPP_SLEEPTRACK_H_
 #define DEMOAPP_SLEEPTRACK_H_
 
-void sleepTrack(void);
-void showMainScreen(void);
+void DemoApp_SleepTrack(void);
 
 #endif /* DEMOAPP_SLEEPTRACK_H_ */
