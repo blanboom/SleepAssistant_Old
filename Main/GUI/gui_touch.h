@@ -12,13 +12,13 @@
 
 typedef struct Parameter
 {
-long double An,  			 //注:sizeof(long double) = 8
+long double An,  			 // 注:sizeof(long double) = 8
             Bn,
             Cn,
             Dn,
             En,
             Fn,
-            Divider ;
+            Divider;
 }Parameter;
 
 typedef	struct POINT

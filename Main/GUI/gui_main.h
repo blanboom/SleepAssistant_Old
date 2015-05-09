@@ -8,9 +8,9 @@
 #ifndef GUI_GUI_MAIN_H_
 #define GUI_GUI_MAIN_H_
 
-void GUI_Main_StartScreen(void);
-void GUI_Main_NoteScreen(void);
-void GUI_Main_MainScreen(void);
+void GUI_Main_Start(void);
+uint8_t GUI_Main_MenuScreenCheckTouch(void);
+void GUI_Main_MenuScreen(void);
 void GUI_Main_F2_MainScreen(void);
 void GUI_Main_F3_MainScreen(void);
 void GUI_Main_F4_MainScreen(void);
