@@ -9,6 +9,7 @@
 #include "ili9320.h"
 #include "SysTick.h"
 #include "gui_main.h"
+#include "gui_touch.h"
 
 #ifndef GUI_GUI_MAIN_C_
 #define GUI_GUI_MAIN_C_
@@ -17,6 +18,7 @@ uint8_t graphX, graphY, graphWidth, graphHeight, graphRight, graphNowX;
 uint16_t graphBG;
 
 // x, y 为图标左上角坐标
+// 绘制折线图
 void GUI_Main_DrawGraph_Prepare(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint16_t background) {
 	graphX      = x;
 	graphY      = y;
@@ -45,12 +47,14 @@ void GUI_Main_DrawGraph(uint8_t data, uint16_t color) {
 	graphNowX++;
 }
 
-void GUI_Main_StartScreen(void) {
+void GUI_Main_Start(void) {
+	GUI_Touch_Init();
+	while(GUI_Touch_Calibrate() != 0);
+	/********* Start *********/
 	ili9320_Clear(0xc73c);
 	GUI_DisplayBMP(85, 20, "/GUI/welcome.bmp");
-}
-
-void GUI_Main_NoteScreen(void) {
+	while (GUI_Touch_Read_2046() == 0);
+	/********* Note *********/
 	ili9320_Clear(White);
 	//GUI_DisplayBMP(0, 0, "/GUI/note.bmp");
 	GUI_Rectangle(0, 0, 320, 41, 0x001f, 1);
@@ -59,9 +63,10 @@ void GUI_Main_NoteScreen(void) {
 	GUI_DisplayBMP_SkipBackground(16, 62, "/GUI/note2.bmp", 0xffff);
 	GUI_DisplayBMP_SkipBackground(212, 62, "/GUI/note3.bmp", 0xffff);
 	//GUI_Rectangle(0, 233, 320, 240, 0x001f, 1);
+	while (GUI_Touch_Read_2046() == 0);
 }
 
-void GUI_Main_MainScreen(void) {
+void GUI_Main_MenuScreen(void) {
 	ili9320_Clear(Black);
 	GUI_DisplayBMP(6,   18,  "/GUI/main1.bmp");
 	GUI_DisplayBMP(110, 18,  "/GUI/main2.bmp");
@@ -71,31 +76,26 @@ void GUI_Main_MainScreen(void) {
 	GUI_DisplayBMP(214, 123, "/GUI/main6.bmp");
 }
 
-
-
-void GUI_Main_F2_MainScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f2/f2.bmp");
-}
-
-void GUI_Main_F3_MainScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f3/f3.bmp");
-}
-
-void GUI_Main_F4_MainScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f4/f4.bmp");
-}
-
-void GUI_Main_F5_MainScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f5/f5.bmp");
-}
-
-void GUI_Main_F6_MainScreen(void) {
-	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f6/f6.bmp");
+uint8_t GUI_Main_MenuScreenCheckTouch(void) {
+	Coordinate* pTouchPosition;
+	uint16_t x, y;
+	pTouchPosition = GUI_Touch_Read_2046();
+	if(pTouchPosition == 0) return 0;
+	x = pTouchPosition -> x;
+	y = pTouchPosition -> y;
+	if(y > 540  && y < 1324) {
+		if(x > 760  && x < 1790) return 1;
+		if(x > 2300 && x < 3360) return 4;
+	}
+	if(y > 1700 && y < 2530) {
+		if(x > 760  && x < 1790) return 2;
+		if(x > 2300 && x < 3360) return 5;
+	}
+	if(y > 2840 && y < 3689) {
+		if(x > 760  && x < 1790) return 3;
+		if(x > 2300 && x < 3360) return 6;
+	}
+	return 0;
 }
 
 #endif /* GUI_GUI_MAIN_C_ */
