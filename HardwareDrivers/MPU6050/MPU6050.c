@@ -33,7 +33,7 @@
 /* Includes */
 #include "stm32f10x_conf.h"
 #include "MPU6050.h"
-
+#include "stdbool.h"
 
 /** @defgroup MPU6050_Library
  * @{
