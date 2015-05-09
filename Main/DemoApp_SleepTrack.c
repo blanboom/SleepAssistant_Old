@@ -1,14 +1,31 @@
 #include "DemoApp_SleepTrack.h"
 #include "gui_basic.h"
 #include "gui_main.h"
+#include "gui_touch.h"
 #include "ili9320.h"
 #include "motion.h"
 #include <stdio.h>
 #include "diag/Trace.h"
-
+#include "SysTick.h"
 
 uint16_t sleepBadTotal = 0;
 uint16_t sleepTotal    = 0;
+
+void showNoteScreen(void);
+void showMainScreen(void);
+void sleepTrack(void);
+
+void DemoApp_SleepTrack(void) {
+	showNoteScreen();
+	delay(200);
+	while (GUI_Touch_Read_2046() == 0);
+	showMainScreen();
+	delay(500);
+	for(;;) {
+		sleepTrack();
+		if(GUI_Touch_Read_2046() != 0) return;
+	}
+}
 
 void showNoteScreen(void) {
 	ili9320_Clear(White);
@@ -31,10 +48,9 @@ void sleepTrack(void) {
 		GUI_Main_DrawGraph(sleepBadValue, Blue);
 		if(sleepBadValue >= 2) { sleepBadTotal++; }
 		sleepTotal++;
-		GUI_Word(240, 65, 4, sleepBadTotal*10000/sleepTotal, 2, Black, White);
+		GUI_Word(240, 65, 4, 9999 - sleepBadTotal*10000/sleepTotal, 2, Black, White);
 		sleepBadValue = 0;
 		counter       = 0;
-
 	}
 	sleepBadValue += detectMove();
 	counter++;
