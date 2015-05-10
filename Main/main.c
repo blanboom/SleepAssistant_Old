@@ -12,11 +12,17 @@
 #include "SysTick.h"
 #include "MP3Play.h"
 #include "USART1.h"
-#include "App_Alarm.h"
 #include "ili9320.h"
 #include "gui_basic.h"
 #include "gui_main.h"
+#include "VS1053.h"
+#include "Switches.h"
 #include "DemoApp_SleepTrack.h"
+#include "DemoApp_HeartRate.h"
+#include "DemoApp_Alarm.h"
+#include "DemoApp_Wireless.h"
+#include "DemoApp_Music.h"
+#include "DemoApp_About.h"
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -31,10 +37,10 @@ int main(int argc, char* argv[]) {
 	timeInit();           // RTC 及时间初始化
 	systickInit();        // SysTick 初始化
 	GUI_Init();
-
-	//mp3Init();
+	VS1053_Init();
 	USART1_Init();
 	motionInit();         // 动作感应（MPU6050 等）初始化
+	Switches_Init();
 
 	f_mount(0, &filesystem);
 
@@ -47,6 +53,26 @@ int main(int argc, char* argv[]) {
 		switch(GUI_Main_MenuScreenCheckTouch()) {
 		case 1:
 			DemoApp_SleepTrack();
+			GUI_Main_MenuScreen();
+			break;
+		case 2:
+			DemoApp_HeartRate();
+			GUI_Main_MenuScreen();
+			break;
+		case 3:
+			DemoApp_Alarm();
+			GUI_Main_MenuScreen();
+			break;
+		case 4:
+			DemoApp_Wireless();
+			GUI_Main_MenuScreen();
+			break;
+		case 5:
+			DemoApp_Music();
+			GUI_Main_MenuScreen();
+			break;
+		case 6:
+			DemoApp_About();
 			GUI_Main_MenuScreen();
 			break;
 		default:
