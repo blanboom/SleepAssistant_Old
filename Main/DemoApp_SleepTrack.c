@@ -22,7 +22,7 @@ void DemoApp_SleepTrack(void) {
 	showMainScreen_SleepTrack();
 	delay(500);
 	for(;;) {
-		sleepTrack();
+		sleepTrack(); sleepTrack(); sleepTrack(); sleepTrack();
 		if(GUI_Touch_Read_2046() != 0) return;
 	}
 }
