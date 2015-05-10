@@ -1,6 +1,7 @@
 // 来源：https://github.com/tarasii/Humidity-stm32-I
 
 #include "dht11.h"
+#include "Systick.h"
 
 uint16_t read_cycle(uint16_t cur_tics, uint8_t neg_tic){
 	uint16_t cnt_tics;
@@ -19,31 +20,27 @@ uint16_t read_cycle(uint16_t cur_tics, uint8_t neg_tic){
 }
 
 uint8_t DHT11_RawRead(uint8_t *buf){
-//  GPIO_InitTypeDef GPIO_InitStructure;
+    GPIO_InitTypeDef GPIO_InitStructure;
 	uint16_t dt[42];
 	uint16_t cnt;
 	uint8_t i, check_sum; 
 	
-//  GPIO_InitStructure.GPIO_Pin = DHT11_PIN;
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
-//  GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-//  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
-//  GPIO_Init(DHT11_PORT, &GPIO_InitStructure);
-	pin_mode(DHT11_PORT, DHT11_PIN, GPIO_MODE_OUT2_PP);
+    GPIO_InitStructure.GPIO_Pin = DHT11_PIN;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+    GPIO_Init(DHT11_PORT, &GPIO_InitStructure);
 	
 
 	//reset DHT11
-	Delay(500);
- 	GPIO_LOW(DHT11_PORT,DHT11_PIN);
-	Delay(20);
- 	GPIO_HIGH(DHT11_PORT,DHT11_PIN);
+	delay(500);
+ 	GPIO_ResetBits(DHT11_PORT,DHT11_PIN);
+	delay(20);
+ 	GPIO_SetBits(DHT11_PORT,DHT11_PIN);
 	
-//  GPIO_InitStructure.GPIO_Pin = DHT11_PIN;
-//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
-//  GPIO_Init(DHT11_PORT, &GPIO_InitStructure);
-	pin_mode(DHT11_PORT, DHT11_PIN, GPIO_MODE_IN);
+    GPIO_InitStructure.GPIO_Pin = DHT11_PIN;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_Init(DHT11_PORT, &GPIO_InitStructure);
 	
   //start reading	
  	cnt = 0; 
@@ -58,7 +55,7 @@ uint8_t DHT11_RawRead(uint8_t *buf){
 	}
 	
  	//release line
-	GPIO_HIGH(DHT11_PORT, DHT11_PIN);
+	GPIO_SetBits(DHT11_PORT, DHT11_PIN);
 
 	for (i = 0; i<5; i++) buf[i]=0;
 	
@@ -89,51 +86,55 @@ uint8_t DHT11_RawRead(uint8_t *buf){
 	//return check_sum;
 }
 
-uint8_t DHT11_pwm_Read(uint8_t *buf, uint32_t *dt, uint32_t *cnt){
-	uint8_t i, check_sum; 
-	
-	*cnt = 0;
-	for (i = 0; i<43; i++) dt[i]=0;
-
-	pin_mode(DHT11_PORT, DHT11_PIN, GPIO_MODE_OUT2_PP);
-
-	GPIO_LOW(DHT11_PORT,	DHT11_PIN);
-	Delay(20);
-	GPIO_HIGH(DHT11_PORT,	DHT11_PIN);
-	tim_init_pwm_cnt(DHT11_PORT,	DHT11_PIN);
-	Delay(20);
-
-	//pin_mode(TIM2_GPIO, TIM2_CH1, GPIO_MODE_OUT2_PP);
-	//GPIO_HIGH(TIM2_GPIO,	TIM2_CH1);
-
-	for (i = 0; i<5; i++) buf[i]=0;
-		
-	if (*cnt==0) return DHT11_NO_CONN;
-	
-	//convert data
- 	for(i=3;i<42;i++){
-		(*buf) <<= 1;
-  	if (dt[i]>2000) {
-			(*buf)++;
- 		}
-		if (!((i-2)%8) && (i>3)) {
-			buf++;
-		}
- 	}
-	
-	//calculate checksum
-	buf -= 5;
-	check_sum = 0;
- 	for(i=0;i<4;i++){
-		check_sum += *buf;
-		buf++;
-	}
-	
-	if (*buf != check_sum) return DHT11_CS_ERROR;
-				
-	return DHT11_OK;	
-	//return check_sum;
-}
+//uint8_t DHT11_pwm_Read(uint8_t *buf, uint32_t *dt, uint32_t *cnt){
+//	GPIO_InitTypeDef GPIO_InitStructure;
+//	uint8_t i, check_sum;
+//
+//	*cnt = 0;
+//	for (i = 0; i<43; i++) dt[i]=0;
+//
+//	GPIO_InitStructure.GPIO_Pin = DHT11_PIN;
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+//	GPIO_Init(DHT11_PORT, &GPIO_InitStructure);
+//
+//	GPIO_ResetBits(DHT11_PORT,	DHT11_PIN);
+//	delay(20);
+//	GPIO_SetBits(DHT11_PORT,	DHT11_PIN);
+//	tim_init_pwm_cnt(DHT11_PORT,	DHT11_PIN);
+//	delay(20);
+//
+//	//pin_mode(TIM2_GPIO, TIM2_CH1, GPIO_MODE_OUT2_PP);
+//	//GPIO_SetBits(TIM2_GPIO,	TIM2_CH1);
+//
+//	for (i = 0; i<5; i++) buf[i]=0;
+//
+//	if (*cnt==0) return DHT11_NO_CONN;
+//
+//	//convert data
+// 	for(i=3;i<42;i++){
+//		(*buf) <<= 1;
+//  	if (dt[i]>2000) {
+//			(*buf)++;
+// 		}
+//		if (!((i-2)%8) && (i>3)) {
+//			buf++;
+//		}
+// 	}
+//
+//	//calculate checksum
+//	buf -= 5;
+//	check_sum = 0;
+// 	for(i=0;i<4;i++){
+//		check_sum += *buf;
+//		buf++;
+//	}
+//
+//	if (*buf != check_sum) return DHT11_CS_ERROR;
+//
+//	return DHT11_OK;
+//	//return check_sum;
+//}
 
 
 float DHT22_Humidity(uint8_t *buf){

@@ -84,3 +84,8 @@ void playAlarm(void) {
 		// 打开蜂鸣器
 	}
 }
+
+// 关闭文件、蜂鸣器等
+void playAlarm_Stop(TCHAR* song) {
+
+}
