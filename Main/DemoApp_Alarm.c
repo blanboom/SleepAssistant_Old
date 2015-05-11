@@ -10,6 +10,7 @@
 #include "gui_main.h"
 #include "gui_touch.h"
 #include "ili9320.h"
+#include "Switches.h"
 #include "motion.h"
 #include <stdio.h>
 #include "diag/Trace.h"
@@ -43,6 +44,8 @@ void DemoApp_Alarm(void) {
 	//playAlarm_Prepare("3_core.mp3");
 	for(;;) {
 		playAlarm();
+		if(0 == Switches_Read_S1()) break;
+		if(0 == Switches_Read_Reed()) break;
 	}
 }
 
