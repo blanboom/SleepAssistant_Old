@@ -54,6 +54,12 @@ void MPU6050_Initialize()
     MPU6050_SetSleepModeStatus(DISABLE);
 }
 
+void MPU6050_DeInit()
+{
+	I2C_Cmd(MPU6050_I2C, DISABLE);
+    I2C_DeInit(MPU6050_I2C);
+}
+
 /** Verify the I2C connection.
  * Make sure the device is connected and responds as expected.
  * @return True if connection is valid, FALSE otherwise

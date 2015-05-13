@@ -396,6 +396,7 @@ extern "C" {
 #define MPU6050_DMP_MEMORY_CHUNK_SIZE   16
 
 void MPU6050_Initialize();
+void MPU6050_DeInit();
 bool MPU6050_TestConnection();
 
 // GYRO_CONFIG register
