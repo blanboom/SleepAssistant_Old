@@ -14,5 +14,7 @@ extern volatile uint16_t AnalogSensors_ADCValue;
 
 void AnalogSensors_Light_Init(void);
 void AnalogSensors_HeartRate_Init(void);
+void AnalogSensors_Light_DeInit(void);
+void AnalogSensors_HeartRate_DeInit(void);
 
 #endif /* ANALOGSENSORS_ANALOGSENSORS_H_ */
