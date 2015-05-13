@@ -58,6 +58,9 @@ bool motionInit(void)
 #endif
 }
 
+void motionDeInit() {
+	MPU6050_DeInit();
+}
 /** void getZeroMotionValue(void) - 获取在正常情况下 MPU6050 的初始值
  * 本操作需要在设备放稳时进行
  */

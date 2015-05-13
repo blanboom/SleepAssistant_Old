@@ -20,6 +20,7 @@ extern uint32_t sleepBadStat;
 
 /* 函数 ****************************************************************************************/
 bool motionInit(void);
+void motionDeInit(void);
 void getZeroMotionValue(void);
 int8_t getDevicePosition(void);
 bool detectMove(void);
