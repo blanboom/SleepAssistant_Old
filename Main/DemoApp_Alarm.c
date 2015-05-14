@@ -44,7 +44,7 @@ void playAlarm_Stop();
 
 void DemoApp_Alarm(void) {
 	showMainScreen_Alarm();
-	playAlarm_Prepare("1_face.mp3");
+	playAlarm_Prepare("5_Bird.mp3");
 	//playAlarm_Prepare("3_core.mp3");
 
 	for(;;) {
