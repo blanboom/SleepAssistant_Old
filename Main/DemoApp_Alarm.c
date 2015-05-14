@@ -63,6 +63,7 @@ void showMainScreen_Alarm(void) {
 
 // 播放闹钟的准备工作
 void playAlarm_Prepare(TCHAR* song) {
+	VS1053_Init();
 	Switches_LED1_ON();
 	Switches_LED2_ON();
 	/* 生成完整文件路径 */
@@ -106,8 +107,7 @@ void playAlarm(void) {
 			Switches_BUZZER_ON();  // 打开蜂鸣器
 			Switches_LED1_ON();
 			Switches_LED2_ON();
-		}
-		else {
+		} else {
 			Switches_BUZZER_OFF();
 			Switches_LED1_OFF();
 			Switches_LED2_OFF();
@@ -121,4 +121,5 @@ void playAlarm_Stop() {
 	Switches_LED1_OFF();
 	Switches_LED2_OFF();
 	Switches_BUZZER_OFF();
+	VS1053_DeInit();
 }
