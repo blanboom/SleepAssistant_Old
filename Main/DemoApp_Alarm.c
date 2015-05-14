@@ -52,6 +52,8 @@ void DemoApp_Alarm(void) {
 		if(0 == Switches_Read_S1()) break;
 		if(0 == Switches_Read_Reed()) break;
 	}
+
+	playAlarm_Stop();
 }
 
 void showMainScreen_Alarm(void) {
