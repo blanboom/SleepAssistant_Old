@@ -81,7 +81,7 @@ void playAlarm_Prepare(TCHAR* song) {
 void playAlarm(void) {
 	uint8_t j = 0;
 	time(&currentUNIXTime);
-	if (res == 0) {
+	if (res == 0 && (br != 0)) {
 		count = 0; /* 512 字节完重新计数 */
 		while (count < 512)  { /* SD 卡读取一个 sector，一个 sector 为 512 字节 */
 			if (DREQ != 0)  { /* 等待 DREQ 为高，请求数据输入 */
