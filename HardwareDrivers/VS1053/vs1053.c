@@ -174,3 +174,8 @@ void VS1053_Init(void) {
 	VS1053_SPI_Init();
 	VS1053_MP3_Start();
 }
+
+void VS1053_DeInit(void) {
+	SPI_Cmd(SPI1, DISABLE);
+	SPI_I2S_DeInit(SPI1);
+}

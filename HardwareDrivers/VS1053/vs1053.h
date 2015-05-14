@@ -92,6 +92,7 @@
 
 
 void VS1053_Init(void);
+void VS1053_DeInit();
 u8 VS1053_WriteByte( u8 byte );
 u8 VS1053_ReadByte(void);
 void VS1053_WriteRegister(u8 addressbyte, u8 highbyte, u8 lowbyte);
