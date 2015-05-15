@@ -81,7 +81,7 @@ Coordinate *GUI_Touch_Read_2046(void)
     int m0,m1,m2,TP_X[1],TP_Y[1],temp[3];
     uint8_t count=0;
 
-		/* 坐标X和Y进行9次采样*/
+	/* 坐标X和Y进行9次采样 */
     int buffer[2][9]={{0},{0}};
     do
     {
