@@ -160,11 +160,11 @@ void VS1053_MP3_Start(void)
 	TRST_SET(1);
 	delay(1);
 
-	VS1053_WriteRegister(SPI_MODE,0x08,0x00);  	// 进入VS1003的播放模式
+	VS1053_WriteRegister(SPI_MODE,0x08,0x00);     	// 进入VS1003的播放模式
 	VS1053_WriteRegister(3, 0x98, 0x00);   		    // 设置vs1003的时钟,3倍频
 	VS1053_WriteRegister(5, 0xBB, 0x81);   		    // 采样率48k，立体声
-	VS1053_WriteRegister(SPI_BASS, TrebleEnhanceValue, BassEnhanceValue);// 设置重低音
-	VS1053_WriteRegister(0x0b,0x30,0x30);      	                         // VS1003 音量
+	VS1053_WriteRegister(SPI_BASS, TrebleEnhanceValue, BassEnhanceValue); // 设置重低音
+	VS1053_WriteRegister(0x0b,0x30,0x30);      	                          // VS1003 音量
 	delay(1);
 
 	while( DREQ == 0 );						   	        // 等待DREQ为高  表示能够接受音乐数据输入
