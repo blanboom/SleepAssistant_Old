@@ -59,6 +59,8 @@ uint8_t checkTouchPosition(void);
 void DemoApp_Alarm(void) {
 	/* 显示欢迎界面 */
 	showMainScreen_Alarm();
+	movedTotal = 0;
+	moveDetectTotal = 0;
 	delay(200);
 	for(;;) {
 		touchState = checkTouchPosition();

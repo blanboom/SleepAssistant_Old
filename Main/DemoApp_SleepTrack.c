@@ -24,6 +24,8 @@ void DemoApp_SleepTrack(void) {
 	showNoteScreen_SleepTrack();
 	AnalogSensors_Light_Init();
 	motionInit();
+	sleepBadTotal = 0;
+	sleepTotal    = 0;
 	delay(200);
 	while (GUI_Touch_Read_2046() == 0);
 	showMainScreen_SleepTrack();
