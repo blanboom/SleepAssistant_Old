@@ -3,6 +3,8 @@
 #define HEARTRATE_PORT        GPIOC
 #define HEARTRATE_PIN         GPIO_Pin_2
 #define HEARTRATE_ADC_CHANNEL ADC_Channel_12
+#define HEARTRATE_CTRL_PORT   GPIOE
+#define HEARTRATE_CTRL_PIN    GPIO_Pin_3
 #define LIGHT_PORT            GPIOC
 #define LIGHT_PIN             GPIO_Pin_3
 #define LIGHT_ADC_CHANNEL     ADC_Channel_13
@@ -98,9 +100,20 @@ void AnalogSensors_Light_Init(void)
 
 void AnalogSensors_HeartRate_Init(void)
 {
+	GPIO_InitTypeDef GPIO_InitStructure;
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOE, ENABLE);
+
+	GPIO_InitStructure.GPIO_Pin = HEARTRATE_CTRL_PIN;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_Init(HEARTRATE_CTRL_PORT, &GPIO_InitStructure);
+
 	AnalogSensors_GPIO_Config();
 	AnalogSensors_ADCMode_Config();
 	ADC_RegularChannelConfig(ADC1, HEARTRATE_ADC_CHANNEL, 1, ADC_SampleTime_55Cycles5);
+
+	GPIO_SetBits(HEARTRATE_CTRL_PORT, HEARTRATE_CTRL_PIN);
 }
 
 void AnalogSensors_Light_DeInit(void)
@@ -111,6 +124,7 @@ void AnalogSensors_Light_DeInit(void)
 
 void AnalogSensors_HeartRate_DeInit(void)
 {
+	GPIO_ResetBits(HEARTRATE_CTRL_PORT, HEARTRATE_CTRL_PIN);
 	ADC_DeInit(ADC1);
 	DMA_DeInit(DMA1_Channel1);
 }
