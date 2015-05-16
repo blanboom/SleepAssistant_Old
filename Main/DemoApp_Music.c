@@ -18,6 +18,7 @@
 #include "SysTick.h"
 #include "VS1053.h"
 #include "Switches.h"
+#include "RTC_Time.h"
 
 /* 文件相关变量，用于储存 MP3 播放相关信息 */
 FATFS fs;      /* Work area (file system object) for logical drive */
@@ -51,8 +52,7 @@ void DemoApp_Music(void) {
 	for(;;) {
 		playMusic();
 		moveDetectTotal_Music++; if(detectMove()) movedTotal_Music++;
-		delay(100);
-		if(moveDetectTotal_Music > 5000) {
+		if(moveDetectTotal_Music > 30000) {
 			if(moveDetectTotal_Music / movedTotal_Music >= 10) break;
 		}
 		if(0 == Switches_Read_S1()) break;
