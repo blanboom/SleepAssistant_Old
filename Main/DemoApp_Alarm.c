@@ -80,7 +80,6 @@ void DemoApp_Alarm(void) {
 				delay(10);
 				if(moveDetectTotal > 1000) {
 					if(moveDetectTotal / movedTotal <= 2) break;
-					moveDetectTotal = 0; movedTotal = 0;
 				}
 			}
 			playAlarm_Prepare("5_Bird.mp3");
