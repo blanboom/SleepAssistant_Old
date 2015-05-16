@@ -32,6 +32,9 @@ uint16_t fileCount = 0;
 uint8_t nowPlaying = 1; // 现在正在播放的歌曲序号，1~9
 uint8_t playCompleted = 0;
 
+uint16_t movedTotal_Music = 0;
+uint16_t moveDetectTotal_Music = 0;
+
 void showMainScreen_Music(void);
 void playMusic_Prepare();
 void playMusic_Switch();
@@ -39,12 +42,19 @@ void playMusic(void);
 void playMusic_Stop();
 
 void DemoApp_Music(void) {
+	movedTotal_Music = 0;
+	moveDetectTotal_Music = 0;
 	Coordinate* pTouchPosition;
 	playMusic_Prepare();
 	showMainScreen_Music(); /* 显示欢迎界面 */
 	delay(200);
 	for(;;) {
 		playMusic();
+		moveDetectTotal_Music++; if(detectMove()) movedTotal_Music++;
+		delay(100);
+		if(moveDetectTotal_Music > 5000) {
+			if(moveDetectTotal_Music / movedTotal_Music >= 10) break;
+		}
 		if(0 == Switches_Read_S1()) break;
 		if(0 == Switches_Read_S2() || 1 == playCompleted) playMusic_Switch();
 		if(1 == touch_flag) {
