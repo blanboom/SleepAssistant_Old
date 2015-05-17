@@ -38,6 +38,7 @@ volatile uint8_t  secondBeat = FALSE;// used to seed rate array so we startup wi
 
 void showMainScreen_HeartRate(void);
 void calcHeartRate(void);
+void updateAnimation(void);
 
 void DemoApp_HeartRate(void) {
 	static time_t tmp_time1, tmp_time2;
@@ -56,10 +57,28 @@ void DemoApp_HeartRate(void) {
 
 		if(tmp_time1 != tmp_time2) {
 			tmp_time2 = tmp_time1;
-			// 更新动画
-			if(tmp_time1 % 5 == 0) {
+			updateAnimation();  // 更新动画
+			if(tmp_time1 % 16 == 0) {
 				trace_printf("%d, %d, %d, %d, %d\n", BPM, P, T, thresh, amp);
 				// 更新显示数据
+				if      (BPM < 60)  GUI_DisplayBMP(103, 80, "/GUI/f2/75.bmp");
+				else if (BPM < 65)  GUI_DisplayBMP(103, 80, "/GUI/f2/65.bmp");
+				else if (BPM < 70)  GUI_DisplayBMP(103, 80, "/GUI/f2/70.bmp");
+				else if (BPM < 75)  GUI_DisplayBMP(103, 80, "/GUI/f2/75.bmp");
+				else if (BPM < 80)  GUI_DisplayBMP(103, 80, "/GUI/f2/80.bmp");
+				else if (BPM < 85)  GUI_DisplayBMP(103, 80, "/GUI/f2/85.bmp");
+				else if (BPM < 90)  GUI_DisplayBMP(103, 80, "/GUI/f2/90.bmp");
+				else if (BPM < 95)  GUI_DisplayBMP(103, 80, "/GUI/f2/95.bmp");
+				else if (BPM < 100) GUI_DisplayBMP(103, 80, "/GUI/f2/100.bmp");
+				else if (BPM < 105) GUI_DisplayBMP(103, 80, "/GUI/f2/105.bmp");
+				else if (BPM < 110) GUI_DisplayBMP(103, 80, "/GUI/f2/110.bmp");
+				else if (BPM < 115) GUI_DisplayBMP(103, 80, "/GUI/f2/115.bmp");
+				else if (BPM < 120) GUI_DisplayBMP(103, 80, "/GUI/f2/120.bmp");
+				else if (BPM < 125) GUI_DisplayBMP(103, 80, "/GUI/f2/125.bmp");
+				else if (BPM < 130) GUI_DisplayBMP(103, 80, "/GUI/f2/130.bmp");
+				else if (BPM < 135) GUI_DisplayBMP(103, 80, "/GUI/f2/135.bmp");
+				else if (BPM < 140) GUI_DisplayBMP(103, 80, "/GUI/f2/140.bmp");
+				else                GUI_DisplayBMP(103, 80, "/GUI/f2/110.bmp");
 			}
 		}
 		if(1 == touch_flag) break;
@@ -69,7 +88,29 @@ void DemoApp_HeartRate(void) {
 
 void showMainScreen_HeartRate(void) {
 	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f2/f2.bmp");
+	GUI_DisplayBMP(0, 0, "/GUI/f2/f2_1.bmp");
+	GUI_DisplayBMP(160, 0, "/GUI/f2/f2_2.bmp");
+}
+
+void updateAnimation(void) {
+	static uint8_t count1 = 0;
+	static uint8_t count2 = 0;
+	switch (count2) {
+	case 0:
+		GUI_Circle(100 + 30*count1, 160, 4, White, 1); break;
+	case 1:
+		GUI_Circle(100 + 30*count1, 160, 4, 0xfc46, 1); break;
+	case 2:
+		GUI_Circle(100 + 30*count1, 160, 4, 0x001f, 1); break;
+	default:
+		break;
+	}
+	count1++;
+	if(count1 > 4) {
+		count1 = 0;
+		count2++;
+		if(count2 > 2) count2 = 0;
+	}
 }
 
 /* 心率计算 */
