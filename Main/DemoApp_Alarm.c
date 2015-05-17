@@ -45,6 +45,8 @@ uint16_t movedTotal = 0;
 uint16_t moveDetectTotal = 0;
 uint8_t touchState;
 
+uint8_t alarmPlayCompleted = 0; //  为 1 时播放完毕
+
 time_t currentUNIXTime;
 Coordinate* pTouchPosition;
 
@@ -59,6 +61,7 @@ uint8_t checkTouchPosition(void);
 void DemoApp_Alarm(void) {
 	/* 显示欢迎界面 */
 	showMainScreen_Alarm();
+	alarmPlayCompleted = 0;
 	movedTotal = 0;
 	moveDetectTotal = 0;
 	delay(200);
@@ -146,9 +149,8 @@ void playAlarm_Prepare(TCHAR* song) {
 // 播放闹钟， 需要循环调用
 void playAlarm(void) {
 	uint8_t j = 0;
-	static uint8_t tmp = 0; // tmp = 1 时播放完毕
 	time(&currentUNIXTime);
-	if (res == 0 && tmp == 0) {
+	if (res == 0 && alarmPlayCompleted == 0) {
 		count = 0; /* 512 字节完重新计数 */
 		while (count < 512)  { /* SD 卡读取一个 sector，一个 sector 为 512 字节 */
 			if (DREQ != 0)  { /* 等待 DREQ 为高，请求数据输入 */
@@ -168,7 +170,7 @@ void playAlarm(void) {
 		res = f_read(&fsrc, buffer, sizeof(buffer), &br);
 	}
 	if (res || (br == 0)) {
-		tmp = 1;
+		alarmPlayCompleted = 1;
 		if(currentUNIXTime % 2 == 0) {
 			Switches_BUZZER_ON();  // 打开蜂鸣器
 			Switches_LED1_ON();
@@ -183,6 +185,7 @@ void playAlarm(void) {
 
 // 关闭文件、蜂鸣器等
 void playAlarm_Stop() {
+	alarmPlayCompleted = 0;
 	f_close(&fsrc);
 	Switches_LED1_OFF();
 	Switches_LED2_OFF();

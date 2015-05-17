@@ -27,7 +27,8 @@ void DemoApp_About(void) {
 
 void showMainScreen_About(void) {
 	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f6/f6.bmp");
+	GUI_DisplayBMP(0, 0, "/GUI/f6/f6_1.bmp");
+	GUI_DisplayBMP(160, 0, "/GUI/f6/f6_2.bmp");
 }
 
 

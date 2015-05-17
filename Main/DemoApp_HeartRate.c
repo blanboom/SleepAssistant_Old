@@ -45,7 +45,7 @@ void DemoApp_HeartRate(void) {
 	static uint32_t tmp_sysTime = 0;
 	showMainScreen_HeartRate();
 	AnalogSensors_HeartRate_Init();
-	delay(500);
+	delay(5000);
 	touch_flag = 0;
 	for(;;) {
 		//trace_printf("%d\n", AnalogSensors_ADCValue);
@@ -58,7 +58,7 @@ void DemoApp_HeartRate(void) {
 		if(tmp_time1 != tmp_time2) {
 			tmp_time2 = tmp_time1;
 			updateAnimation();  // 更新动画
-			if(tmp_time1 % 16 == 0) {
+			if(tmp_time1 % 8 == 0) {
 				trace_printf("%d, %d, %d, %d, %d\n", BPM, P, T, thresh, amp);
 				// 更新显示数据
 				if      (BPM < 60)  GUI_DisplayBMP(103, 80, "/GUI/f2/75.bmp");

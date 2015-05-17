@@ -18,14 +18,19 @@
 void showMainScreen_Wireless(void);
 
 void DemoApp_Wireless(void) {
+	Coordinate* pTouchPosition;
 	showMainScreen_Wireless();
 	delay(500);
 	for(;;) {
-		if(GUI_Touch_Read_2046() != 0) return;
+		if(1 == touch_flag) {
+			pTouchPosition = GUI_Touch_Read_2046();
+			if(pTouchPosition->x < 1032 && pTouchPosition->y < 1032) break;
+		}
 	}
 }
 
 void showMainScreen_Wireless(void) {
 	ili9320_Clear(White);
-	GUI_DisplayBMP(0, 0, "/GUI/f4/f4.bmp");
+	GUI_DisplayBMP(0, 0, "/GUI/f4/f4_1.bmp");
+	GUI_DisplayBMP(160, 0, "/GUI/f4/f4_2.bmp");
 }
