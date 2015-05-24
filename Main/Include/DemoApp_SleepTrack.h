@@ -1,8 +1,5 @@
 /*
- * DemoApp_SleepTrack.h
- *
- *  Created on: 2015年3月29日
- *      Author: maxz
+ * 演示程序：睡眠记录
  */
 
 #ifndef DEMOAPP_SLEEPTRACK_H_

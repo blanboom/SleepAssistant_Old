@@ -1,8 +1,5 @@
 /*
- * DemoApp_HeartRate.h
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：心率
  */
 
 #ifndef INCLUDE_DEMOAPP_HEARTRATE_H_

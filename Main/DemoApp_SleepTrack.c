@@ -1,3 +1,7 @@
+/*
+ * 演示程序：睡眠记录
+ */
+
 #include "DemoApp_SleepTrack.h"
 #include "gui_basic.h"
 #include "gui_main.h"

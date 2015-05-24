@@ -1,8 +1,5 @@
 /*
- * DemoApp_Alarm.c
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：闹钟
  */
 
 #include "DemoApp_Alarm.h"
@@ -99,24 +96,28 @@ void DemoApp_Alarm(void) {
 	playAlarm_Stop();
 }
 
+/* 主界面 */
 void showMainScreen_Alarm(void) {
 	ili9320_Clear(White);
 	GUI_DisplayBMP(0, 0, "/GUI/f3/f3_1.bmp");
 	GUI_DisplayBMP(160, 0, "/GUI/f3/f3_2.bmp");
 }
 
+/* 「正在播放」界面 */
 void showPlayingScreen_Alarm(void) {
 	ili9320_Clear(White);
 	GUI_DisplayBMP(0, 0, "/GUI/f3/f3_x21.bmp");
 	GUI_DisplayBMP(160, 0, "/GUI/f3/f3_x22.bmp");
 }
 
+/* 等待界面 */
 void showWaitingScreen_Alarm(void) {
 	ili9320_Clear(White);
 	GUI_DisplayBMP(0, 0, "/GUI/f3/f3_x11.bmp");
 	GUI_DisplayBMP(160, 0, "/GUI/f3/f3_x12.bmp");
 }
 
+/* 检查触摸位置 */
 uint8_t checkTouchPosition(void) {
 	uint16_t x, y;
 	pTouchPosition = GUI_Touch_Read_2046();
@@ -129,7 +130,7 @@ uint8_t checkTouchPosition(void) {
 	return TOUCH_POSITION_NO;
 }
 
-// 播放闹钟的准备工作
+/* 播放闹钟的准备工作 */
 void playAlarm_Prepare(TCHAR* song) {
 	VS1053_Init();
 	Switches_LED1_ON();
@@ -146,7 +147,7 @@ void playAlarm_Prepare(TCHAR* song) {
 	res = f_read(&fsrc, buffer, sizeof(buffer), &br); // 读取第一部分数据
 }
 
-// 播放闹钟， 需要循环调用
+/* 播放闹钟， 需要循环调用 */
 void playAlarm(void) {
 	uint8_t j = 0;
 	time(&currentUNIXTime);
@@ -183,7 +184,7 @@ void playAlarm(void) {
 	}
 }
 
-// 关闭文件、蜂鸣器等
+/* 关闭文件、蜂鸣器等 */
 void playAlarm_Stop() {
 	alarmPlayCompleted = 0;
 	f_close(&fsrc);

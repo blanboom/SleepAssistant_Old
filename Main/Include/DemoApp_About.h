@@ -1,8 +1,5 @@
 /*
- * DemoApp_About.h
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：关于
  */
 
 #ifndef INCLUDE_DEMOAPP_ABOUT_H_

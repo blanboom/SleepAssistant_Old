@@ -1,3 +1,7 @@
+/*
+ * 心率与光照传感器的读取程序
+ */
+
 #include "AnalogSensors.h"
 
 #define HEARTRATE_PORT        GPIOC
@@ -11,7 +15,7 @@
 
 #define ADC1_DR_Address    ((uint32_t)0x40012400+0x4c)
 
-volatile uint16_t AnalogSensors_ADCValue;
+volatile uint16_t AnalogSensors_ADCValue; // 以 DMA 方式将 ADC 的值放在此变量里
 //__IO u16 ADC_ConvertedValueLocal;
 
 

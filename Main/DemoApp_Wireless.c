@@ -1,8 +1,5 @@
 /*
- * DemoApp_Wireless.c
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：无线连接
  */
 
 #include "DemoApp_Wireless.h"

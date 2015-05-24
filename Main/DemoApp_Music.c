@@ -1,8 +1,5 @@
 /*
- * DemoApp_Music.c
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：音乐播放
  */
 
 #include "DemoApp_Music.h"

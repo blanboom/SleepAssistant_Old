@@ -1,8 +1,5 @@
 /*
- * DemoApp_About.c
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：关于
  */
 
 #include "DemoApp_About.h"

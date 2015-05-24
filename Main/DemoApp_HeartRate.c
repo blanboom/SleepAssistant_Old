@@ -1,8 +1,5 @@
 /*
- * DemoApp_HeartRate.c
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：心率
  */
 
 #include "DemoApp_HeartRate.h"
@@ -92,6 +89,7 @@ void showMainScreen_HeartRate(void) {
 	GUI_DisplayBMP(160, 0, "/GUI/f2/f2_2.bmp");
 }
 
+/* 更新动画 */
 void updateAnimation(void) {
 	static uint8_t count1 = 0;
 	static uint8_t count2 = 0;
@@ -113,7 +111,9 @@ void updateAnimation(void) {
 	}
 }
 
-/* 心率计算 */
+/* 心率计算
+ * TODO: 采用 PulseSensor 的 Arduino 程序，但目前不能正常工作
+ */
 void calcHeartRate(void) {
 	Signal = AnalogSensors_ADCValue;              // read the Pulse Sensor
 	sampleCounter += 2;       // keep track of the time in mS with this variable

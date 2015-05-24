@@ -1,8 +1,5 @@
 /*
- * DemoApp_Alarm.h
- *
- *  Created on: 2015年5月9日
- *      Author: maxz
+ * 演示程序：闹钟
  */
 
 #ifndef INCLUDE_DEMOAPP_ALARM_H_
