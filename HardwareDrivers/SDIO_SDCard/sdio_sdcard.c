@@ -191,6 +191,10 @@
 
 #include "sdio_sdcard.h"
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 /* Private macro -------------------------------------------------------------*/
 /**
   * @brief  SDIO Static flags, TimeOut, FIFO Address
@@ -2700,3 +2704,5 @@ uint8_t convert_from_bytes_to_power_of_two(uint16_t NumberOfBytes)
   }
   return(count);
 }
+
+#pragma GCC diagnostic pop

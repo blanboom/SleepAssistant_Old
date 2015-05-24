@@ -6,6 +6,7 @@
 #define INCLUDE_MOTION_H_
 /* 头文件 *************************************************************************************/
 #include "MPU6050.h"
+#include "stdbool.h"
 
 /* 常量 ***************************************************************************************/
 /* 设备方向 */
@@ -19,6 +20,7 @@ extern uint32_t sleepBadStat;
 
 /* 函数 ****************************************************************************************/
 bool motionInit(void);
+void motionDeInit(void);
 void getZeroMotionValue(void);
 int8_t getDevicePosition(void);
 bool detectMove(void);

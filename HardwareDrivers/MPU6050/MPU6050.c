@@ -33,7 +33,7 @@
 /* Includes */
 #include "stm32f10x_conf.h"
 #include "MPU6050.h"
-
+#include "stdbool.h"
 
 /** @defgroup MPU6050_Library
  * @{
@@ -52,6 +52,12 @@ void MPU6050_Initialize()
     MPU6050_SetFullScaleGyroRange(MPU6050_GYRO_FS_250);
     MPU6050_SetFullScaleAccelRange(MPU6050_ACCEL_FS_2);
     MPU6050_SetSleepModeStatus(DISABLE);
+}
+
+void MPU6050_DeInit()
+{
+	I2C_Cmd(MPU6050_I2C, DISABLE);
+    I2C_DeInit(MPU6050_I2C);
 }
 
 /** Verify the I2C connection.

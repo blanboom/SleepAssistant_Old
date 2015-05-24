@@ -3,7 +3,8 @@
 
 #include "systick.h"
 
-static __IO uint32_t TimingDelay;
+static volatile uint32_t TimingDelay;
+volatile uint32_t sysTime = 0;
 
 /**
   * @brief  启动 SysTick
@@ -42,6 +43,7 @@ void delay(__IO uint32_t nTime)
   */
 void systickDelayISR(void)
 {
+	sysTime++;
 	if(TimingDelay != 0x00)
 	{
 		TimingDelay--;
